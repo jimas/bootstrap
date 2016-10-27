@@ -21,8 +21,7 @@ public class MenuDomain extends BaseDomain {
     private String sortStr;//排序
     private String icon;//菜单icon
     private Integer level;//菜单等级
-    
-    
+
     public Integer getLevel() {
         return level;
     }
