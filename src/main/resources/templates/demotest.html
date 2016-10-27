@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head th:lang="${lang}" lang="zh_CN">
+    <meta charset="UTF-8" />
+    <title></title>
+</head>
+<body>
+
+<h1 th:text="${host}"></h1>
+
+<span th:inline="text">[[${jimas}]]</span>
+${#ctx.locale}
+${#ctx.request}
+
+
+<p>
+Today is: <span th:inline="text">[[${#calendars.format(today,'dd MMMM yyyy')}]]</span>
+</p>
+
+
+<p>Please select an option</p>
+<ol>
+	<li><a href="product/list.html" th:href="@{/product/list}">Product List</a></li>
+	<li><a href="order/list.html" th:href="@{/order/list}">Order List</a></li>
+	<li><a href="subscribe.html" th:href="@{/subscribe}">Subscribe to our Newsletter</a></li>
+	<li><a href="userprofile.html" th:href="@{/userprofile}">See User Profile</a></li>
+</ol>
+
+<p>
+Now you are looking at a <span th:text="'working web application'">template file</span>.
+</p>
+
+<p>The year is <span th:text="2016">1492</span>.</p>
+<p>In two years, it will be <span th:text="2016 + 2">1494</span>.</p>
+
+<p th:utext="#{home.welcome}">Welcome to our grocery store!</p>
+
+
+</body>
+</html>

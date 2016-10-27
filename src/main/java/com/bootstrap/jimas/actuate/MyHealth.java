@@ -1,0 +1,25 @@
+package com.bootstrap.jimas.actuate;
+import org.springframework.boot.actuate.health.Health;
+import org.springframework.boot.actuate.health.HealthIndicator;
+import org.springframework.stereotype.Component;
+ 
+@Component
+public class MyHealth implements HealthIndicator {
+ 
+    @Override
+    public Health health() {
+        int errorCode = check(); // perform some specific health check
+        if (errorCode != 0) {
+        return Health.down().withDetail("Error Code", errorCode).build();
+        }
+        return Health.up().build();
+    }
+
+    /**
+     * 执行一些特殊的健康检查
+     * @return
+     */
+    private int check() {
+        return 0;
+    }
+}

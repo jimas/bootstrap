@@ -1,0 +1,51 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org"> 
+<body>
+	<div th:fragment="menu">
+		
+		<ul class="page-sidebar-menu">
+				<li>
+					<div class="sidebar-toggler hidden-phone"></div>
+				</li>
+				<li>
+					<form class="sidebar-search">
+						<div class="input-box">
+							<a href="javascript:;" class="remove"></a>
+							<input type="text" placeholder="Search..." />
+							<input type="button" class="submit" value=" " />
+						</div>
+					</form>
+				</li>
+				
+				<li class="start active " th:class="(${menuRs.menuCode} eq ${ancestorCode}) ? 'start active ' :'' "  th:each="menuRs : ${listMenu}">
+					<a href="javascript:;" th:href="${menuRs.menuUrl}  ?: 'javascript:;' ">
+						<i class="icon-home" th:class="${menuRs.icon}  ?: '' "> </i>
+						<span class="title" th:text="(${lang} eq 'zh_CN') ? ${menuRs.menuName} : ${menuRs.menuCode}"></span>
+						<span class="selected " th:if="${menuRs.menuCode} eq ${ancestorCode}" ></span>
+						<span class="arrow " th:class="(${menuRs.menuCode} eq ${ancestorCode} ) ? 'arrow open' :'arrow' " th:if="${not #lists.isEmpty(menuRs.subMenuList)}"></span>
+					</a>
+					<ul class="sub-menu" th:if="${not #lists.isEmpty(menuRs.subMenuList)}" >
+						<li class="active" th:class="(${subMenuRs.menuCode} eq ( ${not #lists.isEmpty(subMenuRs.subMenuList)} ? ${parentCode} : ${code})  ) ? 'active' :'' " th:each="subMenuRs : ${menuRs.subMenuList}">
+							<a href="javascript:;" th:href="${subMenuRs.menuUrl}  ?: 'javascript:;' ">
+								<i class="icon-home" th:class="${subMenuRs.icon}    ?: '' "> </i>
+								<span class="title" th:text="(${lang} eq 'zh_CN') ? ${subMenuRs.menuName} : ${subMenuRs.menuCode}"></span>
+								<span class="arrow " th:class="(${subMenuRs.menuCode} eq ${parentCode} ) ? 'arrow open' :'arrow' " th:if="${not #lists.isEmpty(subMenuRs.subMenuList)}"></span>
+							</a>
+							<ul class="sub-menu" th:if="${not #lists.isEmpty(subMenuRs.subMenuList)}" >
+								<li class="active" th:class="(${subSubMenuRs.menuCode} eq ${code}) ? 'active' :'' " th:each="subSubMenuRs : ${subMenuRs.subMenuList}">
+									<a href="javascript:;" th:href="${subSubMenuRs.menuUrl}  ?: 'javascript:;' ">
+										<i class="icon-home" th:class="${subSubMenuRs.icon}    ?: '' "> </i>
+										<span class="title" th:text="(${lang} eq 'zh_CN') ? ${subSubMenuRs.menuName} : ${subSubMenuRs.menuCode}"></span>
+									</a>
+								</li>
+								
+							</ul>
+							
+						</li>
+					</ul>
+				</li>
+				
+		</ul>
+	</div>
+</body>
+</html>

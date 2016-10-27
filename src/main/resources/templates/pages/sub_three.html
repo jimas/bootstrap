@@ -1,0 +1,48 @@
+﻿<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-3.dtd">
+<html lang="en" class="no-js" xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<!-- BEGIN HEAD -->
+<head>
+	<meta charset="utf-8" />
+	<title>Jimas首页</title>
+	<meta content="width=device-width, initial-scale=1.0" name="viewport" />
+	<meta content="" name="description" />
+	<meta content="" name="author" />
+	<!-- BEGIN GLOBAL MANDATORY STYLES -->
+	<div th:include="common/head :: head" th:remove="tag"/>
+</head>
+<!-- END HEAD -->
+<!-- BEGIN BODY -->
+<body class="page-header-fixed" th:with="ancestorCode='Layouts',parentCode='Layouts',code='sub-menu-3'">
+
+	<!-- BEGIN HEADER -->
+	<div class="header navbar navbar-inverse navbar-fixed-top" th:include="common/header :: header"/>
+	<!-- END HEADER -->
+	<!-- BEGIN CONTAINER -->
+	<div class="page-container">
+		<!-- BEGIN MENU SIDEBAR -->
+		<div class="page-sidebar nav-collapse collapse" th:include="common/menu :: menu"/>
+		<!-- END MENU SIDEBAR -->
+		<!-- BEGIN PAGE -->
+		<div class="page-content">
+		
+		
+		</div>
+		<!-- END PAGE -->
+	</div>
+	<!-- END CONTAINER -->
+	<!-- BEGIN foot -->
+	<div class="footer" th:include="common/footer :: foot"/>
+	<!-- END foot -->
+	<!-- BEGIN js -->
+	<div th:include="common/script :: js" th:remove="tag"/>
+	<!-- END js -->
+	<script>
+		jQuery(document).ready(function() {    
+		   App.init(); // initlayout and core plugins
+		});
+	</script>
+</body>
+<!-- END BODY -->
+
+</html>
