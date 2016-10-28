@@ -1,14 +1,18 @@
 package com.bootstrap.jimas.db.mongodb.service;
 
+import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.stereotype.Service;
 
+import com.bootstrap.jimas.common.Constant;
 import com.bootstrap.jimas.db.mongodb.dao.UserInfoRepository;
 import com.bootstrap.jimas.db.mongodb.domain.UserInfo;
 @Service
 public class UserInfoService {
 
+    private static final Logger logger=Logger.getLogger(UserInfoService.class);
     @Autowired
     private UserInfoRepository userInfoRepository;
     
@@ -20,7 +24,9 @@ public class UserInfoService {
      * @param username
      * @return
      */
+    @Cacheable(value=Constant.USER_CACHE_NAME,key="'user_'+#username")
     public UserInfo findByUsername(String username) {
+        logger.info("从 mongodb 库查询 数据   username["+username+"]");
         return userInfoRepository.findByUsername(username);
     }
     /**

@@ -8,4 +8,3 @@ function change_lang(lang){
 		}
 	  });
 } 
-

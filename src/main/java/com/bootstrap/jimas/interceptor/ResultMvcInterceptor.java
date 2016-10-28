@@ -14,8 +14,10 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bootstrap.jimas.common.Constant;
+import com.bootstrap.jimas.db.mongodb.domain.UserInfo;
 import com.bootstrap.jimas.db.mongodb.response.MenuRs;
 import com.bootstrap.jimas.db.mongodb.service.MenuRsService;
+import com.bootstrap.jimas.db.mongodb.service.UserInfoService;
 import com.bootstrap.jimas.utils.CookieUtil;
 
 @Component
@@ -24,6 +26,8 @@ public class ResultMvcInterceptor implements HandlerInterceptor {
     private static final Logger logger = Logger.getLogger(ResultMvcInterceptor.class);
     @Autowired
     private MenuRsService menuRsService;
+    @Autowired
+    private UserInfoService userInfoService;
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj,
             Exception paramException) throws Exception {
@@ -60,8 +64,32 @@ public class ResultMvcInterceptor implements HandlerInterceptor {
             throws Exception {
         //获得请求地址
         StringBuffer requestUrl = request.getRequestURL();
+        String path = parsePath(request);
         logger.info("request url ==>"+requestUrl);
+        String current_user = CookieUtil.getCookie(request, response, Constant.CURRENT_LOGIN_USER);
+        if(StringUtils.isEmpty(current_user)){
+            response.sendRedirect(path+"/userLogin");
+        }else{
+            UserInfo user = userInfoService.findByUsername(current_user);
+            if(StringUtils.isEmpty(user)){
+                response.sendRedirect(path+"userLogin");
+            }
+        }
         return true;
+    }
+
+    private String parsePath(HttpServletRequest request) {
+        String contextPath = request.getContextPath();
+        String path = request.getScheme() + "://" + request.getServerName();
+        if (80 != request.getServerPort()) {
+            path += ":" + request.getServerPort();
+        }
+        if (!contextPath.startsWith("/")) {
+            path += "/" + contextPath;
+        } else {
+            path += contextPath;
+        }
+        return path;
     }
 
 }
