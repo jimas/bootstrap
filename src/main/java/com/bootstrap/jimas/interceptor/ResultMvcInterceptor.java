@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bootstrap.jimas.common.Constant;
 import com.bootstrap.jimas.db.mongodb.response.MenuRs;
 import com.bootstrap.jimas.db.mongodb.service.MenuRsService;
+import com.bootstrap.jimas.utils.CookieUtil;
 
 @Component
 public class ResultMvcInterceptor implements HandlerInterceptor {
@@ -45,9 +46,9 @@ public class ResultMvcInterceptor implements HandlerInterceptor {
             if(menuModel!=null&&menuModel.value()){
                 List<MenuRs> menus = menuRsService.findAllMenu();
                 modelAndView.addObject("listMenu", menus);
-//                modelAndView.addObject("currentUser", null);
             }
             modelAndView.addObject(Constant.COOKIE_LANG_KEY,LocaleContextHolder.getLocale().toString());
+            modelAndView.addObject(Constant.CURRENT_LOGIN_USER,CookieUtil.getCookie(request, response, Constant.CURRENT_LOGIN_USER));
         }
     }
 

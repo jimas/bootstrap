@@ -23,5 +23,31 @@ public class UserInfoService {
     public UserInfo findByUsername(String username) {
         return userInfoRepository.findByUsername(username);
     }
+    /**
+     * 根据用户名与密码查询
+     * @param username
+     * @param password
+     * @return
+     */
+    public UserInfo findByUsernameAndPassword(String username,String password) {
+        
+        return userInfoRepository.findByUsernameAndPassword(username,password);
+    }
 
+    /**
+     * 新增or修改
+     * @param userInfo
+     * @return
+     */
+    public UserInfo saveUserInfo(UserInfo userInfo){
+        
+        return userInfoRepository.save(userInfo);
+    }
+    
+    public Boolean deleteUserInfo(UserInfo userInfo){
+        userInfoRepository.delete(userInfo);
+        return null;
+        
+    }
+    
 }

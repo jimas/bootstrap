@@ -1,12 +1,9 @@
-package com.bootstrap.jimas.controller.metronic;
+package com.bootstrap.jimas.controller.web;
 
 import java.util.Date;
 import java.util.Locale;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -19,7 +16,7 @@ public class HelloController {
     LocaleResolver localeResolver;
 
     
-    @RequestMapping("/hello")
+    @RequestMapping({"/","/index"})
     public String hello(ModelMap map,HttpServletRequest request, HttpServletResponse response) {
         // 加入一个属性，用来在模板中读取
         map.addAttribute("host", "http://blog.didispace.com");
@@ -27,7 +24,7 @@ public class HelloController {
         map.addAttribute("templateName", "thymeleaf模板");
         map.addAttribute("today", new Date());
         // return模板文件的名称，对应src/main/resources/templates/hello.html
-        return "metronic/hello";  
+        return "pages/index";  
     }
     @RequestMapping("/demoEn")
     public String demoEn(ModelMap map,HttpServletRequest request, HttpServletResponse response) {

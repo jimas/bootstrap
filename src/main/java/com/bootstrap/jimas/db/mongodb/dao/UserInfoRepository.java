@@ -11,4 +11,5 @@ import com.bootstrap.jimas.db.mongodb.domain.UserInfo;
  */
 public interface  UserInfoRepository  extends MongoRepository<UserInfo, String> {
     UserInfo findByUsername(String username);
+    UserInfo findByUsernameAndPassword(String username,String password);
 }

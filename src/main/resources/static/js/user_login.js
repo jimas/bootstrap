@@ -48,7 +48,8 @@ var Login = function () {
 	            },
 
 	            submitHandler: function (form) {
-	                window.location.href = "jimas.html";
+	            	form.submit();
+//	                window.location.href = "jimas.html";
 	            }
 	        });
 

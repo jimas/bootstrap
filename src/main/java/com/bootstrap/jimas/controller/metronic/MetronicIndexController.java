@@ -8,10 +8,10 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 @Controller
-public class IndexController {
-    @RequestMapping({"/index"})
+public class MetronicIndexController {
+    @RequestMapping({"/Mindex"})
     public String index(ModelMap map,HttpServletRequest request, HttpServletResponse response) {
         
-        return "metronic/index";  
+        return "metronic/Mindex";  
     }
 }
