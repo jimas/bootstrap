@@ -48,8 +48,18 @@ var Login = function () {
 	            },
 
 	            submitHandler: function (form) {
-	            	form.submit();
-//	                window.location.href = "jimas.html";
+	            	console.info($('.login-form').serialize());
+	            	
+ 	            	 $.post("gotoJimas",$('.login-form').serialize(),function(result){
+	            		 alert(result);
+	            		 if(result.status!=200){
+	            				alert("登录失败："+result.message);
+	            		 }else{
+	            			 window.location.href = "jimas.html";
+	            		 }
+	            	 });
+           	 
+//	            	form.submit();
 	            }
 	        });
 
