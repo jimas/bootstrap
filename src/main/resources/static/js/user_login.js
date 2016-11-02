@@ -55,7 +55,7 @@ var Login = function () {
 //	            			 $('div , li')才是找所有的div和li，之间不存在父子关系
 //	            			 $('div li') 是找div里面所有li，包括子级，孙子级，总之就是div里面所有li，不管有几层关系
 	            		 }else{
-	            			 window.location.href = "jimas.html";
+	            			 window.location.href = "jimas";
 	            		 }
 	            	 });
 	            }
@@ -64,7 +64,14 @@ var Login = function () {
 	        $('.login-form input').keypress(function (e) {
 	            if (e.which == 13) {
 	                if ($('.login-form').validate().form()) {
-	                	$('.login-form').submit();
+	                	$.post("gotoJimas",$('.login-form').serialize(),function(result){
+		            		 if(result.status!=200){
+		            			 $('#error_msg', $('.alert-error')).text(result.message);
+		            			 $('.alert-error', $('.login-form')).show();
+		            		 }else{
+		            			 window.location.href = "jimas";
+		            		 }
+		            	 });
 	                }
 	                return false;
 	            }
