@@ -3,7 +3,6 @@ var Login = function () {
     return {
         //main function to initiate the module
         init: function () {
-        	
            $('.login-form').validate({
 	            errorElement: 'label', //default input error message container
 	            errorClass: 'help-inline', // default input error message class
@@ -48,18 +47,17 @@ var Login = function () {
 	            },
 
 	            submitHandler: function (form) {
-	            	console.info($('.login-form').serialize());
-	            	
  	            	 $.post("gotoJimas",$('.login-form').serialize(),function(result){
-	            		 alert(result);
 	            		 if(result.status!=200){
-	            				alert("登录失败："+result.message);
+	            			 $('#error_msg', $('.alert-error')).text(result.message);
+	            			 $('.alert-error', $('.login-form')).show();
+//	            			 $('div','li')是$(子，父)，是从父节点里找子，而不是找li外面的div
+//	            			 $('div , li')才是找所有的div和li，之间不存在父子关系
+//	            			 $('div li') 是找div里面所有li，包括子级，孙子级，总之就是div里面所有li，不管有几层关系
 	            		 }else{
 	            			 window.location.href = "jimas.html";
 	            		 }
 	            	 });
-           	 
-//	            	form.submit();
 	            }
 	        });
 
@@ -202,4 +200,4 @@ var Login = function () {
 
     };
 
-}();
+}();//加上 “()” 标示自动执行

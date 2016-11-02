@@ -57,18 +57,15 @@ public class LoginController {
     @RequestMapping(value="/gotoJimas",method=RequestMethod.POST)
     public ResultVo gotoJimas(UserInfo userInfo,HttpServletRequest request, HttpServletResponse response){
         ResultVo resultVo = new ResultVo();
-        String current_login_user = CookieUtil.getCookie(request, response, Constant.CURRENT_LOGIN_USER);
-        if(StringUtils.isEmpty(current_login_user)){
-            String username = userInfo.getUsername();
-            String password = userInfo.getPassword();
-            userInfo = userInfoService.findByUsernameAndPassword(username, password);
-            if(StringUtils.isEmpty(userInfo)){
-                resultVo.setStatus(400);
-                resultVo.setMessage("用户名密码错误");
-                return resultVo;
-            }
-            CookieUtil.saveCookie(response, Constant.max_age, Constant.CURRENT_LOGIN_USER, username);
+        String username = userInfo.getUsername();
+        String password = userInfo.getPassword();
+        userInfo = userInfoService.findByUsernameAndPassword(username, password);
+        if(StringUtils.isEmpty(userInfo)){
+            resultVo.setStatus(400);
+            resultVo.setMessage("用户名密码错误");
+            return resultVo;
         }
+        CookieUtil.saveCookie(response, Constant.max_age, Constant.CURRENT_LOGIN_USER, username);
         return resultVo;
     }
    
