@@ -19,6 +19,7 @@ import com.bootstrap.jimas.db.mongodb.response.MenuRs;
 import com.bootstrap.jimas.db.mongodb.service.MenuRsService;
 import com.bootstrap.jimas.db.mongodb.service.UserInfoService;
 import com.bootstrap.jimas.utils.CookieUtil;
+import com.bootstrap.jimas.utils.RequestPathUtil;
 
 @Component
 public class ResultMvcInterceptor implements HandlerInterceptor {
@@ -64,32 +65,23 @@ public class ResultMvcInterceptor implements HandlerInterceptor {
             throws Exception {
         //获得请求地址
         StringBuffer requestUrl = request.getRequestURL();
-        String path = parsePath(request);
+        String path = RequestPathUtil.getHomePath(request);
         logger.info("request url ==>"+requestUrl);
         String current_user = CookieUtil.getCookie(request, response, Constant.CURRENT_LOGIN_USER);
         if(StringUtils.isEmpty(current_user)){
-            response.sendRedirect(path+"/userLogin");
+            if(!path.endsWith("/")){
+                path=path+"/";
+            }
+            response.sendRedirect(path+"userLogin");
         }else{
             UserInfo user = userInfoService.findByUsername(current_user);
             if(StringUtils.isEmpty(user)){
-                response.sendRedirect(path+"userLogin");
+                response.sendRedirect(path+"/userLogin");
             }
         }
         return true;
     }
 
-    private String parsePath(HttpServletRequest request) {
-        String contextPath = request.getContextPath();
-        String path = request.getScheme() + "://" + request.getServerName();
-        if (80 != request.getServerPort()) {
-            path += ":" + request.getServerPort();
-        }
-        if (!contextPath.startsWith("/")) {
-            path += "/" + contextPath;
-        } else {
-            path += contextPath;
-        }
-        return path;
-    }
+   
 
 }

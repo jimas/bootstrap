@@ -114,14 +114,27 @@ var Login = function () {
 	            },
 
 	            submitHandler: function (form) {
-	                window.location.href = "jimas.html";
+	            	$.post("gotoGetPwd",$('.forget-form').serialize(),function(result){
+	            		 if(result.status!=200){
+	            			 alert(result.message);
+	            		 }else{
+	            			 alert("找回密码成功请到邮箱内查看链接");
+	            		 }
+	            	 });
+	            	
 	            }
 	        });
 
 	        $('.forget-form input').keypress(function (e) {
 	            if (e.which == 13) {
 	                if ($('.forget-form').validate().form()) {
-	                    window.location.href = "jimas.html";
+	                	$.post("gotoGetPwd",$('.forget-form').serialize(),function(result){
+		            		 if(result.status!=200){
+		            			 alert(result.message);
+		            		 }else{
+		            			 alert("找回密码成功请到邮箱内查看链接");
+		            		 }
+		            	 });
 	                }
 	                return false;
 	            }
@@ -190,7 +203,15 @@ var Login = function () {
 	            },
 
 	            submitHandler: function (form) {
-	                window.location.href = "jimas.html";
+	            	$.post("gotoRegister",$('.register-form').serialize(),function(result){
+	            		 if(result.status!=200){
+	            			 alert("注册失败"+result.message);
+//	            			 $('#error_msg', $('.alert-error')).text(result.message);
+//	            			 $('.alert-error', $('.login-form')).show();
+	            		 }else{
+	            			 window.location.href = "jimas";
+	            		 }
+	            	 });
 	            }
 	        });
 

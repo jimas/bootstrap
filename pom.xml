@@ -22,9 +22,9 @@
 	</parent>
   <dependencies>
   	<dependency>
-	  	<groupId>SpringDemo</groupId>
-		<artifactId>SpringDemo</artifactId>
-		<version>0.0.1-SNAPSHOT</version>
+	  	<groupId>com.mail</groupId>
+		<artifactId>mailUtil</artifactId>
+		<version>1.0</version>
   	</dependency>
    <dependency>
 			<groupId>org.springframework.boot</groupId>

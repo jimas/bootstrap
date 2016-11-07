@@ -20,10 +20,17 @@ public class UserInfoRepositoryTest extends BaseTest {
     @Test
     public void testSaveUserInfo() {
         UserInfo arg0=new UserInfo();
-        arg0.setName("jimas");
-        arg0.setPassword("root");
-        arg0.setUsername("root");
+        arg0.setName("app");
+        arg0.setPassword("app");
+        arg0.setUsername("app1");
+        arg0.setEmail("1281429154@qq.com");
         UserInfo save = userInfoRepository.save(arg0);
+        System.out.println(save);
+    }
+    @Test
+    public void testFindByEmail() {
+        String email="1281429154@qq.com";
+        UserInfo save = userInfoRepository.findByEmail(email);
         System.out.println(save);
     }
     

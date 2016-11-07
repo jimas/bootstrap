@@ -16,6 +16,8 @@ public class UserInfo extends BaseDomain {
     private String password; //密码;
     
     private String salt;//加密密码的盐
+    
+    private String email;//邮箱
    
     private char state;//用户状态,0:创建未认证（比如没有激活，没有输入验证码等等）--等待验证的用户 , 1:正常状态,2：用户被锁定.
 
@@ -70,6 +72,14 @@ public class UserInfo extends BaseDomain {
     public String getCredentialsSalt() {
         
         return this.username+this.salt;
+    }
+
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
     }
 
     

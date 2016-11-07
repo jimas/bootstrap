@@ -24,7 +24,7 @@ public class UserInfoService {
      * @param username
      * @return
      */
-    @Cacheable(value=Constant.USER_CACHE_NAME,key="'user_'+#username")
+//    @Cacheable(value=Constant.USER_CACHE_NAME,key="'user_'+#username")  //不能用缓存 要及时更新
     public UserInfo findByUsername(String username) {
         logger.info("从 mongodb 库查询 数据   username["+username+"]");
         return userInfoRepository.findByUsername(username);
@@ -49,11 +49,24 @@ public class UserInfoService {
         
         return userInfoRepository.save(userInfo);
     }
-    
+    /**
+     * 删除用户
+     * @param userInfo
+     * @return
+     */
     public Boolean deleteUserInfo(UserInfo userInfo){
         userInfoRepository.delete(userInfo);
-        return null;
+        return true;
         
     }
+    /**
+     * 
+     * @param email
+     * @return
+     */
+    public UserInfo findByEmail(String email){
+        return userInfoRepository.findByEmail(email);
+    }
+    
     
 }
