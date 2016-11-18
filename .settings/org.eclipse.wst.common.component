@@ -2,7 +2,6 @@
     <wb-module deploy-name="bootstrap">
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/java"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/java"/>
-        <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/test/resources"/>
         <property name="context-root" value="bootstrap"/>
         <property name="java-output-path" value="/bootstrap/target/classes"/>
     </wb-module>
