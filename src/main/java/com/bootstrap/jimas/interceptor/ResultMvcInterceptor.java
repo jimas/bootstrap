@@ -1,4 +1,5 @@
 package com.bootstrap.jimas.interceptor;
+import java.lang.reflect.Method;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -61,22 +62,27 @@ public class ResultMvcInterceptor implements HandlerInterceptor {
      * 请求正式处理前
      */
     @Override
-    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object obj)
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        //获得请求地址
-        StringBuffer requestUrl = request.getRequestURL();
-        String path = RequestPathUtil.getHomePath(request);
-        logger.info("request url ==>"+requestUrl);
-        String current_user = CookieUtil.getCookie(request, response, Constant.CURRENT_LOGIN_USER);
-        if(StringUtils.isEmpty(current_user)){
-            if(!path.endsWith("/")){
-                path=path+"/";
-            }
-            response.sendRedirect(path+"userLogin");
-        }else{
-            UserInfo user = userInfoService.findByUsername(current_user);
-            if(StringUtils.isEmpty(user)){
-                response.sendRedirect(path+"/userLogin");
+        if(handler.getClass().isAssignableFrom(HandlerMethod.class)) {
+            HandlerMethod mHandler = (HandlerMethod) handler;
+            Method method = mHandler.getMethod();
+            if(null == method) return true;
+            //获得请求地址
+            StringBuffer requestUrl = request.getRequestURL();
+            String path = RequestPathUtil.getHomePath(request);
+            logger.info("request url ==>"+requestUrl);
+            String current_user = CookieUtil.getCookie(request, response, Constant.CURRENT_LOGIN_USER);
+            if(StringUtils.isEmpty(current_user)){
+                if(!path.endsWith("/")){
+                    path=path+"/";
+                }
+                response.sendRedirect(path+"userLogin");
+            }else{
+                UserInfo user = userInfoService.findByUsername(current_user);
+                if(StringUtils.isEmpty(user)){
+                    response.sendRedirect(path+"/userLogin");
+                }
             }
         }
         return true;
