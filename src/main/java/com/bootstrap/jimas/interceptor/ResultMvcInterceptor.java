@@ -32,8 +32,8 @@ public class ResultMvcInterceptor implements HandlerInterceptor {
     private UserInfoService userInfoService;
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj,
-            Exception paramException) throws Exception {
-
+            Exception ex) throws Exception {
+        logger.info(request.getRequestURL()+"===>"+ex);
     }
 
     /**
