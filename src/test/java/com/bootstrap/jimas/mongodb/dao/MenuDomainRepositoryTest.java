@@ -37,7 +37,7 @@ public class MenuDomainRepositoryTest extends BaseTest {
        List list = menuDomainRepository.save(menuDomainList);
        System.out.println(list);
     }
-//    @Test
+    @Test
     public void testSave() {
 //        MenuDomain menuDomain = new MenuDomain();
 //        menuDomain.setAncestorCode(null);
@@ -51,14 +51,14 @@ public class MenuDomainRepositoryTest extends BaseTest {
 //        MenuDomain save = menuDomainRepository.save(menuDomain);
 //        System.out.println(save);
         MenuDomain menuDomain1 = new MenuDomain();
-        menuDomain1.setAncestorCode(null);
-        menuDomain1.setIcon("icon-home");
-        menuDomain1.setMenuCode("Dashboard");
-        menuDomain1.setMenuName("仪表盘");
-        menuDomain1.setMenuUrl("jimas.html");
-        menuDomain1.setParentCode(null);
-        menuDomain1.setSortStr("A");
-        menuDomain1.setLevel(1);
+        menuDomain1.setAncestorCode("Dashboard");
+        menuDomain1.setIcon("icon-user");
+        menuDomain1.setMenuCode("cityList");
+        menuDomain1.setMenuName("城市列表");
+        menuDomain1.setMenuUrl("cityPage");
+        menuDomain1.setParentCode("Dashboard");
+        menuDomain1.setSortStr("A1");
+        menuDomain1.setLevel(2);
         MenuDomain save1 = menuDomainRepository.save(menuDomain1);
         System.out.println(save1);
     }
