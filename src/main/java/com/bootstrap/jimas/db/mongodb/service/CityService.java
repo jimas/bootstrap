@@ -85,6 +85,9 @@ public class CityService {
         List<CityDomain> list = mongoTemplate.find(query.with(pageReq), CityDomain.class);
      
         Page<CityDomain> page=new PageImpl<CityDomain>(list, pageReq, count);
+        if(pageReq.getPageNumber()>page.getTotalPages()){
+            pageReq.setPagenamber(page.getTotalPages());
+        }
         return page;
         
     }

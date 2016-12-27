@@ -33,7 +33,6 @@ public class ResultMvcInterceptor implements HandlerInterceptor {
     @Override
     public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object obj,
             Exception ex) throws Exception {
-        logger.info(request.getRequestURL()+"===>"+ex);
     }
 
     /**

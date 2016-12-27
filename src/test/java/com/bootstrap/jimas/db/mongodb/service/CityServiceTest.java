@@ -63,10 +63,13 @@ public class CityServiceTest extends BaseTest {
     @Test
     public void testFindByPage(){
         SpringDataPageable pageReq=new SpringDataPageable();
+        pageReq.setPagenamber(49);
         Page<CityDomain> page = cityService.findByPage(pageReq);
         List<CityDomain> content = page.getContent();
         int totalPages = page.getTotalPages();
-        System.out.println(content);
+        System.out.println(totalPages);
+        System.out.println(page.hasNext());
+        System.out.println(page.isLast());
         System.out.println(page);
     }
 }

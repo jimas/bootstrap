@@ -40,8 +40,8 @@ var TableAdvanced = function () {
             ],
             "aaSorting": [[1, 'asc']],
              "aLengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "iDisplayLength": 10,
@@ -79,8 +79,8 @@ var TableAdvanced = function () {
             ],
             "aaSorting": [[1, 'asc']],
              "aLengthMenu": [
-                [5, 15, 20, -1],
-                [5, 15, 20, "All"] // change per page values here
+                [10, 15, 20, -1],
+                [10, 15, 20, "All"] // change per page values here
             ],
             // set the initial value
             "iDisplayLength": 10,
@@ -102,12 +102,12 @@ var TableAdvanced = function () {
 
         //main function to initiate the module
         init: function () {
-            
+        	
             if (!jQuery().dataTable) {
                 return;
             }
 
-            initTable1();
+//            initTable1();
             initTable2();
         }
 

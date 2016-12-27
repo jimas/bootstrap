@@ -13,4 +13,6 @@ public class Constant {
     public static final String USER_CACHE_NAME="user_info";//用户缓存名称
     
     public static final String CURRENT_LOGIN_USER="current_login_user";//当前登录人
+    
+    public static final String CURRENTPAGE="pageNumber";//当前页
 }
