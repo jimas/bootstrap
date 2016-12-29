@@ -4,7 +4,6 @@ import java.io.IOException;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 public class JsoupUtil {
     private static final String weatherURL="http://m.weather.com.cn/mweather/";
@@ -19,12 +18,4 @@ public class JsoupUtil {
         return doc;
     }
     
-    
-    public static void main(String[] args) {
-        String cityId="101010100";
-        Document document = JsoupUtil.getDocument(cityId);
-        Element body = document.body();
-        Element elementById = document.getElementById("layout");
-        System.out.println(elementById);
-    }
 }
