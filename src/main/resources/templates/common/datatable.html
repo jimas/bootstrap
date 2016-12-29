@@ -1,0 +1,24 @@
+<!DOCTYPE html SYSTEM "http://www.thymeleaf.org/dtd/xhtml1-strict-thymeleaf-spring4-3.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:th="http://www.thymeleaf.org">
+<body>
+	<div th:fragment="data-table-js">
+
+		<script type="text/javascript" src="media/js/jquery.dataTables.min.js"></script>
+		<script type="text/javascript" src="media/js/select2.min.js"></script>
+		<script type="text/javascript" src="media/js/jquery.dataTables.js"></script>
+		<script type="text/javascript" src="media/js/DT_bootstrap.js"></script>
+		<script src="js/table-edit.js"></script>
+
+
+		<!-- 内联js: -->
+		<script th:inline="javascript">
+			jQuery(document).ready(function() {   
+				   App.init(); // initlayout and core plugins
+				   TableEditable.init();
+			});
+		</script>
+
+	</div>
+</body>
+</html>

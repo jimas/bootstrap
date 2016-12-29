@@ -159,7 +159,7 @@
 	
 	<!-- 内联js: -->
 	<script th:inline="javascript">
-	jQuery(document).ready(function() {    
+	jQuery(document).ready(function() {   
 		   App.init(); // initlayout and core plugins
 	});
 	
@@ -172,7 +172,7 @@
 	);
 	
 	function pageCallBack(pageNum){
-		$.post("cityPage",{"pageNumber":pageNum});
+		window.location="cityPage?pageNumber="+pageNum;
 	}
 	</script>
 </body>
