@@ -21,7 +21,7 @@ var TableEditable = function () {
                 var butIndex=0;
                 for(var rowIndex=0;rowIndex<jqTds.length;rowIndex++){
                 	if(jqTds[rowIndex].attributes["editable"]&&jqTds[rowIndex].attributes["editable"].value=="input"){
-                		jqTds[rowIndex].innerHTML = '<input type="text" class="m-wrap small" value="' + aData[rowIndex] + '">';
+                		jqTds[rowIndex].innerHTML = '<input type="text" class="m-wrap small" value="' + aData[rowIndex] + '"/>';
                 	}
                 	if(jqTds[rowIndex].attributes["editable"]&&jqTds[rowIndex].attributes["editable"].value=="button"){
                 		if(butIndex==0){
@@ -32,6 +32,7 @@ var TableEditable = function () {
                 		butIndex++;
                 	}
                 }
+                oTable.fnDraw();
             }
 
             function saveRow(oTable, nRow) {
@@ -59,10 +60,38 @@ var TableEditable = function () {
 
             //异步保存
             function syncSaveValue(tdRows){
-            	 $.post("saveMenu",$('.login-form').serialize(),function(result){
-            		 
+            	var data=createData(tdRows);
+            	alert(data);
+            	 $.post("saveMenu",data,function(result){
+            		 if(result.status!=200){
+        				alert("保存失败");
+            		 }else{
+        				location.reload();
+            		 }
             	 });
-//            	return false;
+            }
+            function createData(tdRows){
+            	var data="";
+            	for(var i=0;i<tdRows.length;i++){
+            		var $tdHtml=$(tdRows[i]);//定义一个td 的 html
+            		if(tdRows[i].attributes["editable"]&&tdRows[i].attributes["editable"].value=="input"){
+            			var $inputHtml=$(tdRows[i].innerHTML);//定义一个 td 内的 input 的 html
+            			alert(tdRows[i].innerHTML);
+            			if(data==""){
+            				data=data+$tdHtml.attr("name")+"="+$inputHtml.attr("value");
+            			}else{
+            				data=data+"&"+$tdHtml.attr("name")+"="+$inputHtml.attr("value");
+            			}
+            			
+            		}else if(!tdRows[i].attributes["editable"]){//不可编辑项
+            			if(data==""){
+            				data=data+$tdHtml.attr("name")+"="+$tdHtml.html();
+            			}else{
+            				data=data+"&"+$tdHtml.attr("name")+"="+$tdHtml.html();
+            			}
+            		}
+            	}
+            	return data;
             }
             var oTable = $('#sample_editable_1').dataTable({
                 "aLengthMenu": [
@@ -130,7 +159,7 @@ var TableEditable = function () {
 
             $('#sample_editable_1 a.edit').live('click', function (e) {
                 e.preventDefault();
-
+                debugger
                 /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
 
@@ -141,7 +170,7 @@ var TableEditable = function () {
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
-                    saveRow(oTable, nEditing);
+                    saveRow(oTable, nRow);
                     nEditing = null;
                 } else {
                     /* No edit in progress - let's start one */

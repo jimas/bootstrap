@@ -184,6 +184,12 @@
 				<package.target>prod</package.target>
 			</properties>
 		</profile>
+		<profile>
+			<id>proddd</id>
+			<properties>
+				<package.target>proddd</package.target>
+			</properties>
+		</profile>
 	</profiles>
 
 	<build>

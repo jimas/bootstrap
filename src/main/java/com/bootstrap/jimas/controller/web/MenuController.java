@@ -8,9 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
-
 import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
 import com.bootstrap.jimas.db.mongodb.response.MenuRs;
@@ -48,8 +46,7 @@ public class MenuController {
     }
     @RequestMapping("saveMenu")
     @ResponseBody
-    public ResultVo saveMenu(@RequestParam(value="menuDomain" ) MenuDomain menuDomain,HttpRequest request,HttpResponse response){
-        
+    public ResultVo saveMenu(MenuDomain menuDomain,HttpRequest request,HttpResponse response){
         return menuDomainService.saveMenuDomain(menuDomain);
     }
 }
