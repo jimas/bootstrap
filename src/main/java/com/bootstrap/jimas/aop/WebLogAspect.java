@@ -22,6 +22,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 
 import com.bootstrap.jimas.db.mongodb.dao.LogDomainRepository;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
+import com.bootstrap.jimas.utils.IpAddressUtil;
  
 /**
  * 实现Web层的日志切面
@@ -85,7 +86,7 @@ public class WebLogAspect {
             parameters.put(paraName, request.getParameter(paraName));
         } 
         logDomain.setParameters(parameters);
-        logDomain.setRemoteAddr(request.getRemoteAddr());
+        logDomain.setRemoteAddr(IpAddressUtil.getIp2(request));
         logDomain.setUrl(request.getRequestURL().toString());
         logDomain.setOperateDate(new Date());
         logRepository.save(logDomain);

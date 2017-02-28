@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jimas.bootstrap</groupId>
 	<artifactId>bootstrap</artifactId>
-	<version>0.0.2</version>
+	<version>0.0.3</version>
 	<description>bootstrap实例</description>
 	<properties>
 		<!-- 解决中文乱码 -->
