@@ -16,7 +16,7 @@ var InitPage=function(){
 			}
 			var $pageTemp="";
 			var showPageSize=8;
-			
+			debugger
 			if(page.totalPages<=showPageSize){//小于9  全部显示
 				for(var i=1;i<page.totalPages;i++){
 					if(page.number==i){
@@ -26,7 +26,7 @@ var InitPage=function(){
 					}
 				}
 			}else{
-				if(page.totalPages>showPageSize&&page.number<showPageSize){//总页数大于8，并且显示页码 小于8  
+				if(page.totalPages>showPageSize&&page.number<showPageSize-1){//总页数大于7，并且显示页码 小于7  多出  “...” 与 “末页”  
 					for(var i=1;i<showPageSize;i++){
 						if(page.number==i){
 							$pageTemp=$pageTemp+"<li class='active'><a>"+i+"</a></li>";
@@ -37,10 +37,10 @@ var InitPage=function(){
 					$pageTemp=$pageTemp+"<li><a>...</a></li>" +
 					"<li><a href='javascript:;'>"+page.totalPages+"</a></li>";
 				}
-				else if(page.totalPages>showPageSize&&page.number>=showPageSize&&(page.totalPages-page.number)>showPageSize-3){
+				else if(page.totalPages>showPageSize&&page.number>=showPageSize-1&&(page.totalPages-page.number)>showPageSize-3){
 					$pageTemp=$pageTemp+"<li><a num='1' href='javascript:;'>"+1+"</a></li>";
 					$pageTemp=$pageTemp+"<li><a>...</a></li>";
-					for(var j=page.number;j<=page.number+4;j++){
+					for(var j=page.number-2;j<=page.number+2;j++){
 						if(page.number==j){
 							$pageTemp=$pageTemp+"<li class='active'><a>"+j+"</a></li>";
 						}else{

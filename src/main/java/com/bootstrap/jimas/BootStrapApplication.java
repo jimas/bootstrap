@@ -24,7 +24,7 @@ public class BootStrapApplication {
     public static void main(String[] args) throws Exception {
         SpringApplication.run(BootStrapApplication.class, args);
         //关闭自动部署
-//        System.setProperty("spring.devtools.restart.enabled","false");
+//        System.setProperty("spring.devtools.restagirt.enabled","false");
         logger.info(BootStrapApplication.class.getName()+ " =========  Start =========== ");
     }
 
