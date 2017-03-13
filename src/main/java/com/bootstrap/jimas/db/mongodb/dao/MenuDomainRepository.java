@@ -10,5 +10,4 @@ import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
  * @Date 2016年10月9日
  */
 public interface  MenuDomainRepository  extends MongoRepository<MenuDomain, String> {
-    MenuDomain findByMenuCode(String menuCode);
 }

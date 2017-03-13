@@ -27,7 +27,7 @@ public class CityServiceTest extends BaseTest {
         try {
             
             String cityJson = com.google.common.io.Resources.toString(com.google.common.io.Resources.getResource("doc/city.json"), Charsets.UTF_8);
-            List<CityRes> resList= GsonUtil.parseJsonList(cityJson, new TypeToken<ArrayList<CityRes>>(){
+            List<CityRes> resList= (List<CityRes>) GsonUtil.parseJsonList(cityJson, new TypeToken<ArrayList<CityRes>>(){
                 private static final long serialVersionUID = 6294966378044801567L;
                 }.getType());
             for (CityRes cityRes : resList) {

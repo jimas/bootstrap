@@ -3,6 +3,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.context.annotation.PropertySources;
 import org.springframework.scheduling.annotation.EnableAsync;
@@ -16,6 +17,7 @@ import org.springframework.scheduling.annotation.EnableAsync;
 
 @SpringBootApplication(scanBasePackages={"com.bootstrap.jimas"})
 @PropertySources({ @PropertySource("classpath:config.properties")})
+@EnableAspectJAutoProxy(proxyTargetClass=true)//in your spring configuration file or class to force cglib proxies.
 //@ImportResource({ "classpath:spring/applicationContext-init.xml" })
 @EnableAsync // 为了让@Async注解能够生效 (异步调用)
 public class BootStrapApplication {

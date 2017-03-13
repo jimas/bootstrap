@@ -1,20 +1,15 @@
-package com.bootstrap.jimas.db.mongodb.domain;
+package com.bootstrap.jimas.db.mongodb.response;
 
 import java.util.List;
-
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 /**
- * @Description 菜单实体类
+ * @Description 菜单返回类 
  * @author weqinjia.liu
- * @Date 2016年10月9日
+ * @Date 2017年3月13日
  */
-@Document(collection = "jimasMenu")
-public class MenuDomain extends BaseDomain {
+public class MenuRes extends BaseRes{
 
-    private static final long serialVersionUID = 5380460817656498120L;
-    
-    @Id
+    private static final long serialVersionUID = 6880716860489845128L;
+
     private String siteSource;//来源系统
     
     private List<?> menuList;//菜单列表
@@ -35,6 +30,4 @@ public class MenuDomain extends BaseDomain {
         this.menuList = menuList;
     }
     
-    
-
 }

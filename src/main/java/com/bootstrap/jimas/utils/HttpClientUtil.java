@@ -100,9 +100,9 @@ public class HttpClientUtil {
 		HttpClient httpClient = null;
 		HttpPost httpPost = null;
 		String result = null;
-		if (null == params || params.isEmpty() || null == url || null == encode) {
-			throw new RuntimeException("Parameters is empty");
-		}
+//		if (null == params || params.isEmpty() || null == url || null == encode) {
+//			throw new RuntimeException("Parameters is empty");
+//		}
 		try{
 			if (null == httpClient)
 				httpClient = new SSLClient();

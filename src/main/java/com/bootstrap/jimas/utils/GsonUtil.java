@@ -16,8 +16,8 @@ public class GsonUtil {
         return gson.fromJson(json, c);
     }
 
-    public static List parseJsonList(String json, Type type) {
+    public static List<?> parseJsonList(String json, Type type) {
         Gson gson = new Gson();
-        return ((List) gson.fromJson(json, type));
+        return ((List<?>) gson.fromJson(json, type));
     }
 }

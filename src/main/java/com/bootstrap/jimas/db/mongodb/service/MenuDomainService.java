@@ -29,15 +29,73 @@ public class MenuDomainService {
         return menuDomainList;
     }
 
+    /**
+     * 保存单个菜单对象
+     * @param menuDomain
+     * @return
+     */
     public ResultVo saveMenuDomain(MenuDomain menuDomain){
         ResultVo resultVo = new ResultVo();
-        Assert.notNull(menuDomain);
         try {
-            menuDomainRepository.save(menuDomain);
+            Assert.notNull(menuDomain);
+            MenuDomain save = menuDomainRepository.save(menuDomain);
+            resultVo.setResult(save);
         } catch (Exception e) {
             resultVo.setStatus(400);
             resultVo.setMessage(e.getMessage());
             logger.error("MenuDomainService.saveMenuDomain error ",e);
+        }
+        return resultVo;
+    }
+    /**
+     * 保存多个菜单对象
+     * @param menuDomains
+     * @return
+     */
+    public ResultVo saveMenuBatch(List<MenuDomain> menuDomains){
+        ResultVo resultVo = new ResultVo();
+        try {
+            Assert.notNull(menuDomains);
+            List<MenuDomain> save = menuDomainRepository.save(menuDomains);
+            resultVo.setResult(save);
+        } catch (Exception e) {
+            resultVo.setStatus(400);
+            resultVo.setMessage(e.getMessage());
+            logger.error("MenuDomainService.saveMenuBatch error ",e);
+        }
+        return resultVo;
+    }
+    /**
+     * 删除菜单
+     * @param siteSource
+     */
+    public ResultVo deleteMenuRsBySiteSource(String siteSource) {
+        ResultVo resultVo = new ResultVo();
+        try {
+            Assert.notNull(siteSource);
+            menuDomainRepository.delete(siteSource);
+        } catch (Exception e) {
+            resultVo.setStatus(400);
+            resultVo.setMessage(e.getMessage());
+            logger.error("MenuDomainService.deleteMenuRsBySiteSource error ",e);
+        }
+        return resultVo;
+    }
+    /**
+     * 查询菜单
+     * @param siteSource
+     * @return
+     */
+    public ResultVo findMenuBySiteSource(String siteSource) {
+        ResultVo resultVo = new ResultVo();
+        try {
+            Assert.notNull(siteSource);
+            MenuDomain findOne = menuDomainRepository.findOne(siteSource);
+            resultVo.setResult(findOne);
+        } catch (Exception e) {
+            resultVo.setStatus(400);
+            resultVo.setMessage(e.getMessage());
+            logger.error("MenuDomainService.findMenuBySiteSource error ",e);
         }
         return resultVo;
     }

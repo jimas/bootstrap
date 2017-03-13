@@ -17,15 +17,15 @@
 					</form>
 				</li>
 				
-				<li class="start active " th:class="(${menuRs.menuCode} eq ${ancestorCode}) ? 'start active ' :'' "  th:each="menuRs : ${listMenu}">
-					<a href="javascript:;" th:href="${menuRs.menuUrl}  ?: 'javascript:;' ">
-						<i class="icon-home" th:class="${menuRs.icon}  ?: '' "> </i>
-						<span class="title" th:text="(${lang} eq 'zh_CN') ? ${menuRs.menuName} : ${menuRs.menuCode}"></span>
-						<span class="selected " th:if="${menuRs.menuCode} eq ${ancestorCode}" ></span>
-						<span class="arrow " th:class="(${menuRs.menuCode} eq ${ancestorCode} ) ? 'arrow open' :'arrow' " th:if="${not #lists.isEmpty(menuRs.subMenuList)}"></span>
+				<li class="start active " th:class="(${menu.menuCode} eq ${ancestorCode}) ? 'start active ' :'' "  th:each="menu : ${listMenu}">
+					<a href="javascript:;" th:href="${menu.menuUrl}  ?: 'javascript:;' ">
+						<i class="icon-home" th:class="${menu.icon}  ?: '' "> </i>
+						<span class="title" th:text="(${lang} eq 'zh_CN') ? ${menu.menuName} : ${menu.menuCode}"></span>
+						<span class="selected " th:if="${menu.menuCode} eq ${ancestorCode}" ></span>
+						<span class="arrow " th:class="(${menu.menuCode} eq ${ancestorCode} ) ? 'arrow open' :'arrow' " th:if="${not #lists.isEmpty(menu.subMenuList)}"></span>
 					</a>
-					<ul class="sub-menu" th:if="${not #lists.isEmpty(menuRs.subMenuList)}" >
-						<li class="active" th:class="(${subMenuRs.menuCode} eq ( ${not #lists.isEmpty(subMenuRs.subMenuList)} ? ${parentCode} : ${code})  ) ? 'active' :'' " th:each="subMenuRs : ${menuRs.subMenuList}">
+					<ul class="sub-menu" th:if="${not #lists.isEmpty(menu.subMenuList)}" >
+						<li class="active" th:class="(${subMenuRs.menuCode} eq ( ${not #lists.isEmpty(subMenuRs.subMenuList)} ? ${parentCode} : ${code})  ) ? 'active' :'' " th:each="subMenuRs : ${menu.subMenuList}">
 							<a href="javascript:;" th:href="${subMenuRs.menuUrl}  ?: 'javascript:;' ">
 								<i class="icon-home" th:class="${subMenuRs.icon}    ?: '' "> </i>
 								<span class="title" th:text="(${lang} eq 'zh_CN') ? ${subMenuRs.menuName} : ${subMenuRs.menuCode}"></span>
