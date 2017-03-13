@@ -3,7 +3,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.jimas.bootstrap</groupId>
 	<artifactId>bootstrap</artifactId>
-	<version>0.0.3</version>
+	<version>0.0.4</version>
 	<description>bootstrap实例</description>
 	<properties>
 		<!-- 解决中文乱码 -->
@@ -82,11 +82,11 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
-		<dependency>
-			<groupId>cglib</groupId>
-			<artifactId>cglib-nodep</artifactId>
-			<version>3.1</version>
-		</dependency>
+<!-- 		<dependency> -->
+<!-- 			<groupId>cglib</groupId> -->
+<!-- 			<artifactId>cglib-nodep</artifactId> -->
+<!-- 			<version>3.1</version> -->
+<!-- 		</dependency> -->
 		<!-- log4j. -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>

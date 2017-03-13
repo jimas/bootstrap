@@ -50,8 +50,4 @@ public class MD5Util {
         resultString = byteArrayToHexString(md.digest(resultString.getBytes()));
         return resultString;
     }
-    
-    public static void main(String args[]){
-    	System.out.println(MD5Util.MD5Encode("single_s001"+MD5Util.MD5Encode("X_SlamT7RpBKtIFq")));
-    }
 }

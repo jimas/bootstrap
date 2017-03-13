@@ -14,6 +14,7 @@ import org.springframework.format.FormatterRegistry;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.servlet.LocaleResolver;
+import org.springframework.web.servlet.config.annotation.InterceptorRegistration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
 import org.springframework.web.servlet.i18n.CookieLocaleResolver;
@@ -33,9 +34,10 @@ public class WebAppConfig extends WebMvcConfigurerAdapter {
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
-        registry.addInterceptor(resultMvcInterceptor).addPathPatterns(mvcInterceptorAddPath).excludePathPatterns(mvcInterceptorExcludePath);//拦截的url
+        InterceptorRegistration addInterceptor = registry.addInterceptor(resultMvcInterceptor);
+        addInterceptor.addPathPatterns(mvcInterceptorAddPath);// 配置拦截的路径
+        addInterceptor.excludePathPatterns(mvcInterceptorExcludePath);// 配置不拦截的路径
 //        registry.addInterceptor(localeChangeInterceptor());  
-        super.addInterceptors(registry);
     }
 
     /**
