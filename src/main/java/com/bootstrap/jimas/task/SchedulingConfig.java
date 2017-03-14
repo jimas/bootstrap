@@ -22,14 +22,13 @@ public class SchedulingConfig {
     private WebLogApi logService;
     
     /**
-     * 删除过期日志  只删除5天前的日志
+     * 删除过期日志  只删除10天前的日志
      */
     @Scheduled(cron = "0 0/10 * * * ?") // 每10分钟执行一次
     public void schedulerLog() {
         logger.info("delete 5DaysAgo log start ");
         try {
             BaseKeyReq<Integer> daysReq=new BaseKeyReq<Integer>();
-            daysReq.setSiteSource(5);
             logService.deleteLogBydays(daysReq);
         } catch (Exception e) {
             logger.error("删除过期日志失败",e);
