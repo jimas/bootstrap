@@ -1,7 +1,8 @@
 package com.bootstrap.jimas.api;
 
 import com.bootstrap.jimas.common.ResultVo;
-import com.bootstrap.jimas.db.mongodb.response.MenuRes;
+import com.bootstrap.jimas.db.mongodb.domain.Menu;
+import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
 
 /**
  * @Description 菜单接口
@@ -16,17 +17,17 @@ public interface MenuResApi {
      * @param menuRs
      * @return
      */
-    public ResultVo saveMenuRes(MenuRes menuRes);
+    public ResultVo<MenuDomain<Menu>> saveMenuRes(MenuDomain<Menu> menuRes);
     /**
      * 根据来源系统删除菜单
      * @param siteSource
      * @return 
      */
-    public ResultVo deleteMenuRsBySiteSource(String siteSource);
+    public ResultVo<String> deleteMenuRsBySiteSource(String siteSource);
     /**
      * 根据主键查询菜单对象
      * @param siteSource
      * @return
      */
-    public ResultVo findMenuBySiteSource(String siteSource);
+    public ResultVo<MenuDomain<Menu>> findMenuBySiteSource(String siteSource);
 }

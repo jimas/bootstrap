@@ -16,6 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 import com.bootstrap.jimas.common.Constant;
 import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.config.ParamsConfig;
+import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
 import com.bootstrap.jimas.db.mongodb.domain.UserInfo;
 import com.bootstrap.jimas.db.mongodb.service.MenuDomainService;
@@ -53,8 +54,8 @@ public class ResultMvcInterceptor implements HandlerInterceptor {
                 modelAndView=new ModelAndView();
             }
             if(menuModel!=null&&menuModel.value()){
-                ResultVo ResultVo = menuDomainService.findMenuBySiteSource(paramsConfig.getSiteSource());
-                MenuDomain result = (MenuDomain) ResultVo.getResult();
+                ResultVo<MenuDomain<Menu>> ResultVo = menuDomainService.findMenuBySiteSource(paramsConfig.getSiteSource());
+                MenuDomain<Menu> result = (MenuDomain<Menu>) ResultVo.getResult();
                 modelAndView.addObject("listMenu", result.getMenuList());
             }
             modelAndView.addObject(Constant.COOKIE_LANG_KEY,LocaleContextHolder.getLocale().toString());

@@ -10,7 +10,7 @@ import com.bootstrap.jimas.db.mongodb.request.BaseKeyReq;
  */
 public interface WebLogApi {
     
-    public ResultVo insertLog(LogDomain logDomain);
+    public ResultVo<LogDomain> insertLog(LogDomain logDomain);
     
-    public ResultVo deleteLogBydays(BaseKeyReq<Integer> daysReq); 
+    public ResultVo<LogDomain> deleteLogBydays(BaseKeyReq<Integer> daysReq); 
 }

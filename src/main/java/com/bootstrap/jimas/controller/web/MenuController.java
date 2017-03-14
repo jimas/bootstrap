@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootstrap.jimas.common.ResultVo;
+import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
 import com.bootstrap.jimas.db.mongodb.service.MenuDomainService;
 import com.bootstrap.jimas.interceptor.MenuModel;
@@ -28,14 +29,14 @@ public class MenuController {
     @MenuModel
     public String showMenuList(ModelMap map,HttpRequest request,HttpResponse response){
     
-        List<MenuDomain> menuDomainList = menuDomainService.findAllMenu();
+        List<MenuDomain<Menu>> menuDomainList = menuDomainService.findAllMenu();
         map.put("menuList", menuDomainList);
 
         return "pages/menu/menu_list";
     }
     @RequestMapping("saveMenu")
     @ResponseBody
-    public ResultVo saveMenu(MenuDomain menuDomain,HttpRequest request,HttpResponse response){
+    public ResultVo<MenuDomain<Menu>> saveMenu(MenuDomain<Menu> menuDomain,HttpRequest request,HttpResponse response){
         return menuDomainService.saveMenuDomain(menuDomain);
     }
 }

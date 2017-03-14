@@ -10,14 +10,14 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @Date 2016年10月9日
  */
 @Document(collection = "jimasMenu")
-public class MenuDomain extends BaseDomain {
+public class MenuDomain<T> extends BaseDomain {
 
     private static final long serialVersionUID = 5380460817656498120L;
     
     @Id
     private String siteSource;//来源系统
     
-    private List<?> menuList;//菜单列表
+    private List<T> menuList;//菜单列表
 
     public String getSiteSource() {
         return siteSource;
@@ -27,11 +27,11 @@ public class MenuDomain extends BaseDomain {
         this.siteSource = siteSource;
     }
 
-    public List<?> getMenuList() {
+    public List<T> getMenuList() {
         return menuList;
     }
 
-    public void setMenuList(List<?> menuList) {
+    public void setMenuList(List<T> menuList) {
         this.menuList = menuList;
     }
     

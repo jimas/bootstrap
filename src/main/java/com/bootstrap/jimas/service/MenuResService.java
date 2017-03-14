@@ -9,8 +9,8 @@ import org.springframework.stereotype.Service;
 import com.bootstrap.jimas.api.MenuResApi;
 import com.bootstrap.jimas.common.Constant;
 import com.bootstrap.jimas.common.ResultVo;
+import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
-import com.bootstrap.jimas.db.mongodb.response.MenuRes;
 import com.bootstrap.jimas.db.mongodb.service.MenuDomainService;
 /**
  * @Description 在支持Spring Cache的环境下，对于使用 @Cacheable标注的方法，
@@ -33,26 +33,18 @@ public class MenuResService implements MenuResApi{
      * 查询 使用 缓存    
      * @return
      */
-    @Cacheable(value=Constant.MENU_CACHE_NAME,key="'menu_'+#siteSource")
+//    @Cacheable(value=Constant.MENU_CACHE_NAME,key="'menu_'+#siteSource")
     @Override
-    public ResultVo findMenuBySiteSource(String siteSource) {
+    public ResultVo<MenuDomain<Menu>> findMenuBySiteSource(String siteSource) {
         logger.info(siteSource+"查询菜单start");
-        ResultVo resultVo= menuDomainService.findMenuBySiteSource(siteSource);
-        if(resultVo.getStatus()==200){
-            MenuDomain menuDomain = (MenuDomain) resultVo.getResult();
-            resultVo.setResult(convertRs(menuDomain));
-        }
+        ResultVo<MenuDomain<Menu>> resultVo= menuDomainService.findMenuBySiteSource(siteSource);
         logger.info(siteSource+"查询菜单end");
         return resultVo;
     }
     @Override
     @CachePut(value = Constant.MENU_CACHE_NAME,key="'menu_'+#menuRes.siteSource")
-    public ResultVo saveMenuRes(MenuRes menuRes) {
-        ResultVo resultVO = menuDomainService.saveMenuDomain(convertDomain(menuRes));
-        if(resultVO.getStatus()==200){
-            MenuDomain menuDomain = (MenuDomain) resultVO.getResult();
-            resultVO.setResult(convertRs(menuDomain));
-        }
+    public ResultVo<MenuDomain<Menu>> saveMenuRes(MenuDomain<Menu> menuRes) {
+        ResultVo<MenuDomain<Menu>> resultVO = menuDomainService.saveMenuDomain(menuRes);
         return resultVO;
     }
     /**
@@ -60,33 +52,9 @@ public class MenuResService implements MenuResApi{
      */
     @Override
     @CacheEvict(value = Constant.MENU_CACHE_NAME,key="'menu_'+#siteSource")
-    public ResultVo deleteMenuRsBySiteSource(String siteSource) {
+    public ResultVo<String> deleteMenuRsBySiteSource(String siteSource) {
         return menuDomainService.deleteMenuRsBySiteSource(siteSource);
     }
-    /*==================================================================================================*/
 
-    /**
-     * 转换MenuRs对象
-     * @param menuDomain
-     * @return
-     */
-    private MenuRes convertRs(MenuDomain menuDomain) {
-        MenuRes menuRs = new MenuRes();
-        menuRs.setSiteSource(menuDomain.getSiteSource());
-        menuRs.setMenuList(menuDomain.getMenuList());
-        return menuRs;
-    }
-    
-    /**
-     * 转换MenuDomain对象
-     * @param menuRs
-     * @return
-     */
-    private MenuDomain convertDomain(MenuRes menuRs) {
-        MenuDomain menuDomain = new MenuDomain();
-        menuDomain.setSiteSource(menuRs.getSiteSource());
-        menuDomain.setMenuList(menuRs.getMenuList());
-        return menuDomain;
-    }
     
 }

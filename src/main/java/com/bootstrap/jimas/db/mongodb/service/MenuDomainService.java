@@ -1,31 +1,25 @@
 package com.bootstrap.jimas.db.mongodb.service;
+import java.util.Comparator;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Order;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
 import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.db.mongodb.dao.MenuDomainRepository;
+import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
 @Service
 public class MenuDomainService {
-    /**
-     * 默认排序字段
-     */
-    private static String orderBy="sortStr";
     private static final Logger logger=Logger.getLogger(MenuDomainService.class);
             
     @Autowired
     private MenuDomainRepository menuDomainRepository;
     
-    public List<MenuDomain> findAllMenu(){
-        Order orders=new Order(orderBy);
-        Sort sort=new Sort(orders);
-        List<MenuDomain> menuDomainList = menuDomainRepository.findAll(sort);
+    public List<MenuDomain<Menu>> findAllMenu(){
+        List<MenuDomain<Menu>> menuDomainList = menuDomainRepository.findAll();
         return menuDomainList;
     }
 
@@ -34,11 +28,11 @@ public class MenuDomainService {
      * @param menuDomain
      * @return
      */
-    public ResultVo saveMenuDomain(MenuDomain menuDomain){
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<MenuDomain<Menu>> saveMenuDomain(MenuDomain<Menu> menuDomain){
+        ResultVo<MenuDomain<Menu>> resultVo = new ResultVo<MenuDomain<Menu>>();
         try {
             Assert.notNull(menuDomain);
-            MenuDomain save = menuDomainRepository.save(menuDomain);
+            MenuDomain<Menu> save = menuDomainRepository.save(menuDomain);
             resultVo.setResult(save);
         } catch (Exception e) {
             resultVo.setStatus(400);
@@ -52,11 +46,11 @@ public class MenuDomainService {
      * @param menuDomains
      * @return
      */
-    public ResultVo saveMenuBatch(List<MenuDomain> menuDomains){
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<List<MenuDomain<Menu>>> saveMenuBatch(List<MenuDomain<Menu>> menuDomains){
+        ResultVo<List<MenuDomain<Menu>>> resultVo = new ResultVo<List<MenuDomain<Menu>>>();
         try {
             Assert.notNull(menuDomains);
-            List<MenuDomain> save = menuDomainRepository.save(menuDomains);
+            List<MenuDomain<Menu>> save = menuDomainRepository.save(menuDomains);
             resultVo.setResult(save);
         } catch (Exception e) {
             resultVo.setStatus(400);
@@ -69,8 +63,8 @@ public class MenuDomainService {
      * 删除菜单
      * @param siteSource
      */
-    public ResultVo deleteMenuRsBySiteSource(String siteSource) {
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<String> deleteMenuRsBySiteSource(String siteSource) {
+        ResultVo<String> resultVo = new ResultVo<String>();
         try {
             Assert.notNull(siteSource);
             menuDomainRepository.delete(siteSource);
@@ -86,11 +80,22 @@ public class MenuDomainService {
      * @param siteSource
      * @return
      */
-    public ResultVo findMenuBySiteSource(String siteSource) {
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<MenuDomain<Menu>> findMenuBySiteSource(String siteSource) {
+        ResultVo<MenuDomain<Menu>> resultVo = new ResultVo<MenuDomain<Menu>>();
         try {
             Assert.notNull(siteSource);
-            MenuDomain findOne = menuDomainRepository.findOne(siteSource);
+            MenuDomain<Menu> findOne = menuDomainRepository.findOne(siteSource);
+            findOne.getSiteSource();
+            List<Menu> menuList = (List<Menu>) findOne.getMenuList();
+            
+            Menu menu = menuList.get(0);
+            menu.getMenuName();
+            menuList.sort(new Comparator<Menu>() {
+                @Override
+                public int compare(Menu o1, Menu o2) {
+                    return o1.getSortStr().compareTo(o2.getSortStr());
+                }
+            });
             resultVo.setResult(findOne);
         } catch (Exception e) {
             resultVo.setStatus(400);

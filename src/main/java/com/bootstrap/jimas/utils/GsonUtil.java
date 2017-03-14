@@ -3,6 +3,7 @@ package com.bootstrap.jimas.utils;
 import java.lang.reflect.Type;
 import java.util.List;
 
+import com.bootstrap.jimas.common.ResultVo;
 import com.google.gson.Gson;
 
 public class GsonUtil {
@@ -19,5 +20,10 @@ public class GsonUtil {
     public static List<?> parseJsonList(String json, Type type) {
         Gson gson = new Gson();
         return ((List<?>) gson.fromJson(json, type));
+    }
+    public static ResultVo<?> parseJson(String json, Type type) {
+        Gson gson = new Gson();
+        return gson.fromJson(json, type);
+
     }
 }
