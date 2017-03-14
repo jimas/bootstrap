@@ -20,7 +20,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 
-import com.bootstrap.jimas.db.mongodb.dao.LogDomainRepository;
+import com.bootstrap.jimas.api.WebLogApi;
+import com.bootstrap.jimas.config.ParamsConfig;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
 import com.bootstrap.jimas.utils.IpAddressUtil;
  
@@ -38,7 +39,10 @@ import com.bootstrap.jimas.utils.IpAddressUtil;
 public class WebLogAspect {
     private Logger logger =  LoggerFactory.getLogger(this.getClass());
     @Autowired
-    private LogDomainRepository logRepository;
+    private WebLogApi webLogApi;
+    @Autowired
+    private ParamsConfig paramsConfig;
+    
     /**
      * 定义一个切入点.
      * 解释下：
@@ -89,7 +93,8 @@ public class WebLogAspect {
         logDomain.setRemoteAddr(IpAddressUtil.getIp2(request));
         logDomain.setUrl(request.getRequestURL().toString());
         logDomain.setOperateDate(new Date());
-        logRepository.save(logDomain);
+        logDomain.setSiteSource(paramsConfig.getSiteSource());
+        webLogApi.insertLog(logDomain);
         logger.info("request url-->"+request.getRequestURL().toString());
      }
      

@@ -5,9 +5,8 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
 
-import com.bootstrap.jimas.db.mongodb.service.LogService;
-import com.bootstrap.jimas.db.mongodb.service.MenuDomainService;
-import com.bootstrap.jimas.service.MenuResService;
+import com.bootstrap.jimas.api.WebLogApi;
+import com.bootstrap.jimas.db.mongodb.request.BaseKeyReq;
 
 /**
  * @Description 定时任务配置类
@@ -20,11 +19,7 @@ public class SchedulingConfig {
     
     private final Logger logger = Logger.getLogger(getClass());
     @Autowired
-    private MenuResService menuRsService;
-    @Autowired
-    private MenuDomainService menuDomainService;
-    @Autowired
-    private LogService logService;
+    private WebLogApi logService;
     
     /**
      * 删除过期日志  只删除5天前的日志
@@ -33,7 +28,9 @@ public class SchedulingConfig {
     public void schedulerLog() {
         logger.info("delete 5DaysAgo log start ");
         try {
-            logService.delete5DaysAgo();
+            BaseKeyReq<Integer> daysReq=new BaseKeyReq<Integer>();
+            daysReq.setSiteSource(5);
+            logService.deleteLogBydays(daysReq);
         } catch (Exception e) {
             logger.error("删除过期日志失败",e);
         }

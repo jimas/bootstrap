@@ -6,15 +6,16 @@ public class BaseKeyReq<T> extends BaseRes {
 
     private static final long serialVersionUID = -1411538311411618106L;
     
-    private T queryKey;
+    private T siteSource;
 
-    public T getQueryKey() {
-        return queryKey;
+    public T getSiteSource() {
+        return siteSource;
     }
 
-    public void setQueryKey(T queryKey) {
-        this.queryKey = queryKey;
+    public void setSiteSource(T siteSource) {
+        this.siteSource = siteSource;
     }
+
     
     
 

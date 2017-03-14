@@ -23,6 +23,7 @@ public class LogDomain extends BaseDomain {
     
     private Date operateDate;
     
+    private String siteSource;
     
     public Date getOperateDate() {
         return operateDate;
@@ -73,6 +74,12 @@ public class LogDomain extends BaseDomain {
     }
     public void setParameters(Map parameters) {
         this.parameters = parameters;
+    }
+    public String getSiteSource() {
+        return siteSource;
+    }
+    public void setSiteSource(String siteSource) {
+        this.siteSource = siteSource;
     }
     
     

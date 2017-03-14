@@ -2,7 +2,6 @@ package com.bootstrap.jimas.config;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.autoconfigure.web.DefaultErrorAttributes;
 import org.springframework.boot.context.embedded.ConfigurableEmbeddedServletContainer;
 import org.springframework.boot.context.embedded.EmbeddedServletContainerCustomizer;
@@ -23,20 +22,18 @@ import org.springframework.web.servlet.i18n.LocaleChangeInterceptor;
 import com.bootstrap.jimas.interceptor.ResultMvcInterceptor;
 @Configuration
 public class WebAppConfig extends WebMvcConfigurerAdapter {
-    @Value("${result.mvcInterceptor.add.path}")
-    private String[] mvcInterceptorAddPath;
-    @Value("${result.mvcInterceptor.exclude.path}")
-    private String[] mvcInterceptorExcludePath;
     @Autowired
     private ResultMvcInterceptor resultMvcInterceptor;
+    @Autowired
+    private ParamsConfig paramsConfig;
     /**
      * 可以通过此方法添加拦截器
      */
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         InterceptorRegistration addInterceptor = registry.addInterceptor(resultMvcInterceptor);
-        addInterceptor.addPathPatterns(mvcInterceptorAddPath);// 配置拦截的路径
-        addInterceptor.excludePathPatterns(mvcInterceptorExcludePath);// 配置不拦截的路径
+        addInterceptor.addPathPatterns(paramsConfig.getMvcInterceptorAddPath());// 配置拦截的路径
+        addInterceptor.excludePathPatterns(paramsConfig.getMvcInterceptorExcludePath());// 配置不拦截的路径
 //        registry.addInterceptor(localeChangeInterceptor());  
     }
 
