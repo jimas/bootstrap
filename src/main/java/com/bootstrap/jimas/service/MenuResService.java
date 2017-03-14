@@ -46,7 +46,7 @@ public class MenuResService implements MenuResApi{
         return resultVo;
     }
     @Override
-    @CachePut(value = Constant.MENU_CACHE_NAME,key="'menu_'+#siteSource")
+    @CachePut(value = Constant.MENU_CACHE_NAME,key="'menu_'+#menuRes.siteSource")
     public ResultVo saveMenuRes(MenuRes menuRes) {
         ResultVo resultVO = menuDomainService.saveMenuDomain(convertDomain(menuRes));
         if(resultVO.getStatus()==200){
