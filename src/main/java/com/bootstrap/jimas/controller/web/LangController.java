@@ -24,15 +24,15 @@ public class LangController {
     
     @RequestMapping("/setlang")
     @ResponseBody
-    public ResultVo setlang(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<String> setlang(ModelMap map, HttpServletRequest request, HttpServletResponse response) {
+        ResultVo<String> resultVo = new ResultVo<String>();
         try {
             String language = request.getParameter(Constant.COOKIE_LANG_KEY);
             parseLanguage(request,response,language);
             resultVo.setMessage("切换成功");
         } catch (Exception e) {
             logger.error("切换语言失败", e);
-            return new ResultVo(500, "切换语言失败", null);
+            return new ResultVo<String>(500, "切换语言失败", null);
         }
         return resultVo;
     }

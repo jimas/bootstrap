@@ -65,8 +65,8 @@ public class LoginController {
      */
     @ResponseBody
     @RequestMapping(value="/gotoJimas",method=RequestMethod.POST)
-    public ResultVo gotoJimas(UserInfo userInfo,HttpServletRequest request, HttpServletResponse response){
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<String> gotoJimas(UserInfo userInfo,HttpServletRequest request, HttpServletResponse response){
+        ResultVo<String> resultVo = new ResultVo<String>();
         String username = userInfo.getUsername();
         String password = userInfo.getPassword();
         userInfo = userInfoService.findByUsernameAndPassword(username, password);
@@ -87,8 +87,8 @@ public class LoginController {
      */
     @ResponseBody
     @RequestMapping(value="/gotoRegister",method=RequestMethod.POST)
-    public ResultVo gotoRegister(UserInfo userInfo,HttpServletRequest request, HttpServletResponse response){
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<String> gotoRegister(UserInfo userInfo,HttpServletRequest request, HttpServletResponse response){
+        ResultVo<String> resultVo = new ResultVo<String>();
         String username = userInfo.getUsername();
         String password = userInfo.getPassword();
         if(StringUtils.isEmpty(username)||StringUtils.isEmpty(password)){
@@ -116,8 +116,8 @@ public class LoginController {
      */
     @ResponseBody
     @RequestMapping(value="/gotoGetPwd",method=RequestMethod.POST)
-    public ResultVo gotoGetPwd(UserInfo userInfo,HttpServletRequest request, HttpServletResponse response){
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<String> gotoGetPwd(UserInfo userInfo,HttpServletRequest request, HttpServletResponse response){
+        ResultVo<String> resultVo = new ResultVo<String>();
         String receiver = userInfo.getEmail();
         UserInfo findByEmail = userInfoService.findByEmail(receiver);
         if(StringUtils.isEmpty(findByEmail)){
@@ -150,8 +150,8 @@ public class LoginController {
     }
     
     @RequestMapping("/gotoGetUser")
-    public  @ResponseBody ResultVo  findUserInfo(@RequestParam(value="email") String email){
-        ResultVo resultVo = new ResultVo();
+    public  @ResponseBody ResultVo<UserInfo>  findUserInfo(@RequestParam(value="email") String email){
+        ResultVo<UserInfo> resultVo = new ResultVo<UserInfo>();
         UserInfo findByEmail = userInfoService.findByEmail(email);
         resultVo.setResult(findByEmail);
         return resultVo;
