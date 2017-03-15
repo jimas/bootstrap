@@ -1,14 +1,14 @@
 package com.bootstrap.jimas.api;
 
-import static org.junit.Assert.*;
+import static org.junit.Assert.fail;
 
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.db.mongodb.BaseTest;
 import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
+import com.jimas.common.ResultVo;
 
 public class MenuResApiTest extends BaseTest {
 

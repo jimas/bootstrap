@@ -10,13 +10,13 @@ import org.springframework.web.bind.annotation.RestController;
 
 import com.bootstrap.jimas.api.MenuResApi;
 import com.bootstrap.jimas.api.WebLogApi;
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.config.ParamsConfig;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
 import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
 import com.bootstrap.jimas.db.mongodb.request.BaseKeyReq;
-import com.bootstrap.jimas.utils.MD5Util;
+import com.jimas.common.ResultVo;
+import com.jimas.common.util.MD5Util;
 
 /**
  * @Description restful 接口

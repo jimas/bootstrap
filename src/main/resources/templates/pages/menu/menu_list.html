@@ -160,21 +160,21 @@
 										</tr>
 
 									</thead>
-									<tbody th:if="${not #lists.isEmpty(menuList)}">
-										<tr th:each="menuDomain : ${menuList}">
-											<td name="id" th:text="${menuDomain.id}"></td>
-											<td name="menuName" editable="input" th:text="${menuDomain.menuName}"></td>
-											<td name="menuCode" editable="input" th:text="${menuDomain.menuCode}"></td>
-											<td name="parentCode" editable="input" th:text="${menuDomain.parentCode}"></td>
-											<td name="ancestorCode" editable="input" th:text="${menuDomain.ancestorCode}"></td>
-											<td name="menuUrl" editable="input" th:text="${menuDomain.menuUrl}"></td>
-											<td name="sortStr" editable="input" th:text="${menuDomain.sortStr}"></td>
-											<td name="icon" editable="input" th:text="${menuDomain.icon}"></td>
-											<td name="level" editable="input" th:text="${menuDomain.level}"></td>
-											<td editable="button"><a class="edit" href="javascript:;">Edit</a></td>
-											<td editable="button"><a class="delete" href="javascript:;">Delete</a></td>
-										</tr>
-									</tbody>
+<!-- 									<tbody th:if="${not #lists.isEmpty(menuList)}"> -->
+<!-- 										<tr th:each="menuDomain : ${menuList}"> -->
+<!-- 											<td name="id" th:text="${menuDomain.siteSource}"></td> -->
+<!-- 											<td name="menuName" editable="input" th:text="${menuDomain.menuName}"></td> -->
+<!-- 											<td name="menuCode" editable="input" th:text="${menuDomain.menuCode}"></td> -->
+<!-- 											<td name="parentCode" editable="input" th:text="${menuDomain.parentCode}"></td> -->
+<!-- 											<td name="ancestorCode" editable="input" th:text="${menuDomain.ancestorCode}"></td> -->
+<!-- 											<td name="menuUrl" editable="input" th:text="${menuDomain.menuUrl}"></td> -->
+<!-- 											<td name="sortStr" editable="input" th:text="${menuDomain.sortStr}"></td> -->
+<!-- 											<td name="icon" editable="input" th:text="${menuDomain.icon}"></td> -->
+<!-- 											<td name="level" editable="input" th:text="${menuDomain.level}"></td> -->
+<!-- 											<td editable="button"><a class="edit" href="javascript:;">Edit</a></td> -->
+<!-- 											<td editable="button"><a class="delete" href="javascript:;">Delete</a></td> -->
+<!-- 										</tr> -->
+<!-- 									</tbody> -->
 								</table>
 							</div>
 						</div>

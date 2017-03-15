@@ -12,11 +12,11 @@ import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 
 import com.bootstrap.jimas.api.WebLogApi;
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.config.ParamsConfig;
 import com.bootstrap.jimas.db.mongodb.dao.LogDomainRepository;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
 import com.bootstrap.jimas.db.mongodb.request.BaseKeyReq;
+import com.jimas.common.ResultVo;
 import com.mongodb.WriteResult;
 
 @Service
@@ -31,8 +31,8 @@ public class WebLogService implements WebLogApi {
     private MongoTemplate mongoTemplate;
 
     @Override
-    public ResultVo insertLog(LogDomain logDomain) {
-        ResultVo resultVo = new ResultVo();
+    public ResultVo<LogDomain> insertLog(LogDomain logDomain) {
+        ResultVo<LogDomain>  resultVo = new ResultVo<LogDomain> ();
         logger.info(logDomain);
         try {
             LogDomain save = logRepository.save(logDomain);
@@ -46,9 +46,9 @@ public class WebLogService implements WebLogApi {
     }
 
     @Override
-    public ResultVo deleteLogBydays(BaseKeyReq<Integer> daysReq) {
+    public ResultVo<String> deleteLogBydays(BaseKeyReq<Integer> daysReq) {
         int days = paramsConfig.getLogDeleteDate();
-        ResultVo resultVo = new ResultVo();
+        ResultVo<String> resultVo = new ResultVo<String>();
         if (daysReq != null&&daysReq.getSiteSource()!=null) {
             days = daysReq.getSiteSource();
         }

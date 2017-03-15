@@ -1,8 +1,8 @@
 package com.bootstrap.jimas.api;
 
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
 import com.bootstrap.jimas.db.mongodb.request.BaseKeyReq;
+import com.jimas.common.ResultVo;
 /**
  * @Description 日期记录api
  * @author weqinjia.liu
@@ -12,5 +12,5 @@ public interface WebLogApi {
     
     public ResultVo<LogDomain> insertLog(LogDomain logDomain);
     
-    public ResultVo<LogDomain> deleteLogBydays(BaseKeyReq<Integer> daysReq); 
+    public ResultVo<String> deleteLogBydays(BaseKeyReq<Integer> daysReq); 
 }

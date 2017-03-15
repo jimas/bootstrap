@@ -14,7 +14,6 @@ import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.bootstrap.jimas.common.Constant;
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.config.ParamsConfig;
 import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
@@ -22,7 +21,8 @@ import com.bootstrap.jimas.db.mongodb.domain.UserInfo;
 import com.bootstrap.jimas.db.mongodb.service.MenuDomainService;
 import com.bootstrap.jimas.db.mongodb.service.UserInfoService;
 import com.bootstrap.jimas.utils.CookieUtil;
-import com.bootstrap.jimas.utils.RequestPathUtil;
+import com.jimas.common.ResultVo;
+import com.jimas.common.util.RequestPathUtil;
 
 @Component
 public class ResultMvcInterceptor implements HandlerInterceptor {

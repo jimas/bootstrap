@@ -1,8 +1,8 @@
 package com.bootstrap.jimas.api;
 
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
+import com.jimas.common.ResultVo;
 
 /**
  * @Description 菜单接口

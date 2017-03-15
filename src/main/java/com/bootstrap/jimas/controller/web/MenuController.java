@@ -10,11 +10,11 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
 import com.bootstrap.jimas.db.mongodb.service.MenuDomainService;
 import com.bootstrap.jimas.interceptor.MenuModel;
+import com.jimas.common.ResultVo;
 /**
  * @Description 菜单控制类
  * @author weqinjia.liu

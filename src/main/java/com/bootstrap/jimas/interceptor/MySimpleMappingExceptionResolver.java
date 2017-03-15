@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.SimpleMappingExceptionResolver;
 
-import com.bootstrap.jimas.common.ResultVo;
-import com.bootstrap.jimas.utils.GsonUtil;
+import com.jimas.common.ResultVo;
+import com.jimas.common.util.GsonUtil;
 @Component
 public class MySimpleMappingExceptionResolver extends SimpleMappingExceptionResolver {
 	
@@ -37,7 +37,7 @@ public class MySimpleMappingExceptionResolver extends SimpleMappingExceptionReso
 		} else {// JSON格式返回
 			try {
 				log.error("ModelAndView("+viewName+") error[500]:", ex);
-				ResultVo result = new ResultVo();
+				ResultVo<String> result = new ResultVo<String>();
 				result.setStatus(500);
 				result.setMessage("服务异常");
 				response.setCharacterEncoding("UTF-8");

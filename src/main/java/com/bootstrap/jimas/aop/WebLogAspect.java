@@ -25,7 +25,7 @@ import org.springframework.web.context.request.ServletRequestAttributes;
 import com.bootstrap.jimas.api.WebLogApi;
 import com.bootstrap.jimas.config.ParamsConfig;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
-import com.bootstrap.jimas.utils.IpAddressUtil;
+import com.jimas.common.util.IpAddressUtil;
 
 /**
  * 实现Web层的日志切面 在切入点前的操作，按order的值由小到大执行 在切入点后的操作，按order的值由大到小执行 在实际中order值可以设置为负值，确保是第一个进行执行的

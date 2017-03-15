@@ -13,9 +13,9 @@ import com.bootstrap.jimas.common.SpringDataPageable;
 import com.bootstrap.jimas.db.mongodb.BaseTest;
 import com.bootstrap.jimas.db.mongodb.domain.CityDomain;
 import com.bootstrap.jimas.db.mongodb.response.CityRes;
-import com.bootstrap.jimas.utils.GsonUtil;
 import com.google.common.base.Charsets;
 import com.google.common.reflect.TypeToken;
+import com.jimas.common.util.GsonUtil;
 
 public class CityServiceTest extends BaseTest {
 

@@ -7,10 +7,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.Assert;
 
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.db.mongodb.dao.MenuDomainRepository;
 import com.bootstrap.jimas.db.mongodb.domain.Menu;
 import com.bootstrap.jimas.db.mongodb.domain.MenuDomain;
+import com.jimas.common.ResultVo;
 @Service
 public class MenuDomainService {
     private static final Logger logger=Logger.getLogger(MenuDomainService.class);

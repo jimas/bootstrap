@@ -18,12 +18,12 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.bootstrap.jimas.common.Constant;
-import com.bootstrap.jimas.common.ResultVo;
 import com.bootstrap.jimas.db.mongodb.domain.UserInfo;
 import com.bootstrap.jimas.db.mongodb.service.UserInfoService;
 import com.bootstrap.jimas.utils.CookieUtil;
-import com.bootstrap.jimas.utils.RequestPathUtil;
-import com.common.util.mail.MailUtil;
+import com.jimas.common.ResultVo;
+import com.jimas.common.mail.MailUtil;
+import com.jimas.common.util.RequestPathUtil;
 
 import freemarker.template.TemplateException;
 

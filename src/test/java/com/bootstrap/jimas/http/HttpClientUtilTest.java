@@ -9,7 +9,7 @@ import org.springframework.http.HttpHeaders;
 import org.springframework.http.MediaType;
 import org.springframework.web.client.RestTemplate;
 
-import com.bootstrap.jimas.utils.GsonUtil;
+import com.jimas.common.util.GsonUtil;
 
 public class HttpClientUtilTest {
 

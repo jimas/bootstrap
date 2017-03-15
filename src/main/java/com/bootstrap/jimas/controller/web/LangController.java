@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.LocaleResolver;
 
 import com.bootstrap.jimas.common.Constant;
-import com.bootstrap.jimas.common.ResultVo;
+import com.jimas.common.ResultVo;
 
 @Controller
 public class LangController {
