@@ -3,6 +3,7 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CacheEvict;
 import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 
 import com.bootstrap.jimas.api.MenuResApi;
@@ -32,7 +33,7 @@ public class MenuResService implements MenuResApi{
      * 查询 使用 缓存    
      * @return
      */
-//    @Cacheable(value=Constant.MENU_CACHE_NAME,key="'menu_'+#siteSource")
+    @Cacheable(value=Constant.MENU_CACHE_NAME,key="'menu_'+#siteSource")
     @Override
     public ResultVo<MenuDomain<Menu>> findMenuBySiteSource(String siteSource) {
         logger.info(siteSource+"查询菜单start");
