@@ -9,7 +9,7 @@ import org.springframework.data.domain.Sort;
  * @author weqinjia.liu
  * @Date 2016年12月25日
  */
-public class SpringDataPageable implements Pageable,Serializable {
+public class SpringDataPageable<T> implements Pageable,Serializable {
 
     private static final long serialVersionUID = 6275528053337688997L;
 
@@ -20,6 +20,7 @@ public class SpringDataPageable implements Pageable,Serializable {
     //排序
     private Sort sort;
     
+    private T param;
     
     public Integer getPagenamber() {
         return pagenamber;
@@ -81,5 +82,15 @@ public class SpringDataPageable implements Pageable,Serializable {
     public Pageable previousOrFirst() {
         return null;
     }
+
+    public T getParam() {
+        return param;
+    }
+
+    public void setParam(T param) {
+        this.param = param;
+    }
+    
+    
 
 }

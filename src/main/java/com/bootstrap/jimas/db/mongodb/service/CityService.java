@@ -80,7 +80,7 @@ public class CityService {
         Query query=new Query();
         List<Order> orders=new ArrayList<Order>();
         orders.add(new Order(Direction.ASC,"cityId"));
-        pageReq.setSort(new Sort(orders));;
+        pageReq.setSort(new Sort(orders));
         long count = mongoTemplate.count(query, CityDomain.class);
         List<CityDomain> list = mongoTemplate.find(query.with(pageReq), CityDomain.class);
      
