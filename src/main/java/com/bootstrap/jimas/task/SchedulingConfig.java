@@ -44,18 +44,21 @@ public class SchedulingConfig {
      */
     @Scheduled(cron = "0 0/10 * * * ?") // 每10分钟执行一次
     public void schedulerLog() {
-        logger.info("delete 5DaysAgo log start ");
+        logger.info("delete expire log  start ");
+        Long startTime=System.currentTimeMillis();
         try {
             BaseKeyReq<Integer> daysReq=new BaseKeyReq<Integer>();
             logService.deleteLogBydays(daysReq);
         } catch (Exception e) {
             logger.error("删除过期日志失败",e);
         }
-        logger.info("delete 5DaysAgo log end ");
+        Long second=(System.currentTimeMillis()-startTime)/1000;
+        logger.info("delete expire log 耗时 ："+second/3600+"h "+(second/60)%60+"m "+second%60+"s");
     }
     @Scheduled(cron = "0 0 0 * * ?") // 每天凌晨0点执行一次
     public void logIpCount() {
         logger.info("logIpCount log start ");
+        Long startTime=System.currentTimeMillis();
         try {
             SpringDataPageable<LogCountReq> pageReq=new SpringDataPageable<LogCountReq>();
             Integer pagenamber=1;
@@ -75,9 +78,10 @@ public class SchedulingConfig {
                 pagenamber++;
             }
         } catch (Exception e) {
-            logger.error("删除过期日志失败",e);
+            logger.error("logIpCount 统计日志失败",e);
         }
-        logger.info("logIpCount log end ");
+        Long second=(System.currentTimeMillis()-startTime)/1000;
+        logger.info("logIpCount 耗时 ："+second/3600+"h "+(second/60)%60+"m "+second%60+"s");
     }
     
     

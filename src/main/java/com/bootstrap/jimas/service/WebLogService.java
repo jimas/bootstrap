@@ -17,6 +17,7 @@ import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import com.bootstrap.jimas.api.WebLogApi;
 import com.bootstrap.jimas.common.SpringDataPageable;
@@ -27,6 +28,7 @@ import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
 import com.bootstrap.jimas.db.mongodb.request.BaseKeyReq;
 import com.bootstrap.jimas.db.mongodb.request.LogCountReq;
 import com.jimas.common.ResultVo;
+import com.jimas.common.util.DateUtil;
 import com.mongodb.WriteResult;
 
 @Service
@@ -84,8 +86,15 @@ public class WebLogService implements WebLogApi {
         List<Order> orders=new ArrayList<Order>();
         orders.add(new Order(Direction.ASC,"operateDate"));
         pageReq.setSort(new Sort(orders));
-        CriteriaDefinition criteriaDefinition=new Criteria("operateDate").lte(pageReq.getParam().getOperateDate());
-        query.with(pageReq).addCriteria(criteriaDefinition);
+        query.with(pageReq);
+        LogCountReq param = pageReq.getParam();
+        if(!StringUtils.isEmpty(param)){
+            Date operateDate = param.getOperateDate();
+            if(!StringUtils.isEmpty(operateDate)){
+                CriteriaDefinition criteriaDefinition=new Criteria("operateDate").lte(operateDate).gt(DateUtils.addDays(operateDate, -2));
+                query.addCriteria(criteriaDefinition);
+            }
+        }
         long count = mongoTemplate.count(query, LogDomain.class);
         List<LogDomain> list = mongoTemplate.find(query, LogDomain.class);
      
