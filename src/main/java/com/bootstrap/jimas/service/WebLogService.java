@@ -9,7 +9,6 @@ import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageImpl;
-import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.domain.Sort.Direction;
 import org.springframework.data.domain.Sort.Order;
@@ -22,7 +21,6 @@ import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
-
 import com.bootstrap.jimas.api.WebLogApi;
 import com.bootstrap.jimas.api.request.LogIpRq;
 import com.bootstrap.jimas.api.request.LogStatisticsRq;
@@ -101,8 +99,7 @@ public class WebLogService implements WebLogApi {
         if (!StringUtils.isEmpty(param)) {
             Date operateDate = param.getOperateDate();
             if (!StringUtils.isEmpty(operateDate)) {
-                int days = 2;
-                CriteriaDefinition criteriaDefinition = new Criteria("operateDate").lte(operateDate).gt(DateUtils.addDays(operateDate, -days));
+                CriteriaDefinition criteriaDefinition = new Criteria("operateDate").lte(operateDate).gt(DateUtils.addDays(operateDate, -param.getDays()));
                 query.addCriteria(criteriaDefinition);
             }
         }
