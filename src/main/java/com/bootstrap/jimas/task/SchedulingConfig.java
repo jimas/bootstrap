@@ -1,28 +1,20 @@
 package com.bootstrap.jimas.task;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
-
-import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
-import org.springframework.util.StringUtils;
-
 import com.bootstrap.jimas.api.WebLogApi;
 import com.bootstrap.jimas.common.SpringDataPageable;
-import com.bootstrap.jimas.db.mongodb.dao.LogIpCountRepository;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
-import com.bootstrap.jimas.db.mongodb.domain.LogIpCount;
 import com.bootstrap.jimas.db.mongodb.request.BaseKeyReq;
 import com.bootstrap.jimas.db.mongodb.request.LogCountReq;
+import com.bootstrap.jimas.db.mongodb.service.LogIpCountService;
+import com.bootstrap.jimas.db.mongodb.service.LogUrlCountService;
 import com.jimas.common.ResultVo;
-import com.jimas.common.util.DateUtil;
 
 /**
  * @Description 定时任务配置类
@@ -37,7 +29,9 @@ public class SchedulingConfig {
     @Autowired
     private WebLogApi logService;
     @Autowired
-    private LogIpCountRepository logIpCountRepository;
+    private LogIpCountService logIpCountService;
+    @Autowired
+    private LogUrlCountService logUrlCountService;
     
     /**
      * 删除过期日志  只删除10天前的日志
@@ -71,7 +65,8 @@ public class SchedulingConfig {
                 pageReq.setPagesize(pagesize);
                 ResultVo<Page<LogDomain>> rs = logService.findPagesByParams(pageReq);
                 Page<LogDomain> page = rs.getResult();
-                insertLogIpCountTable(page);
+                List<LogDomain> logDomainList = page.getContent();
+                logIpCountService.insertLogIpCountTable(logDomainList);
                 if(pagenamber>=page.getTotalPages()){
                     break;
                 }
@@ -81,39 +76,37 @@ public class SchedulingConfig {
             logger.error("logIpCount 统计日志失败",e);
         }
         Long second=(System.currentTimeMillis()-startTime)/1000;
-        logger.info("logIpCount 耗时 ："+second/3600+"h "+(second/60)%60+"m "+second%60+"s");
+        logger.info("logIpCount log 耗时 ："+second/3600+"h "+(second/60)%60+"m "+second%60+"s");
     }
     
-    
-    /*========================================== private method ========================================================*/
-    private void insertLogIpCountTable(Page<LogDomain> page) {
-        List<LogDomain> logList = page.getContent();
-        if(!CollectionUtils.isEmpty(logList)){
-            HashMap<String, LogIpCount> map=new HashMap<String, LogIpCount>();
-            for (LogDomain logDomain : logList) {
-                String remoteAddr = logDomain.getRemoteAddr();
-                Date operateDate = logDomain.getOperateDate();
-                String siteSource = StringUtils.isEmpty(logDomain.getSiteSource())?"bootstrap":logDomain.getSiteSource();
-                String id=siteSource+"-"+DateUtil.formatDate(operateDate)+"-"+remoteAddr;
-                if(!map.containsKey(id)){
-                    LogIpCount value=new LogIpCount();
-                    value.setAccess_count(1L);
-                    value.setId(id);
-                    value.setOperateDate(DateUtil.parseStrAutoToDate(DateUtil.format(operateDate,DateUtil.DATE_FORMAT)));
-                    value.setRemoteAddr(remoteAddr);
-                    value.setSiteSource(siteSource);
-                    map.put(id, value);
-                }else{
-                    LogIpCount logIpCount = map.get(id);
-                    logIpCount.setAccess_count(logIpCount.getAccess_count()+1);
+    @Scheduled(cron = "0 0 1 * * ?") // 每天凌晨1点执行一次
+    public void logUrlCount() {
+        logger.info("logUrlCount log start ");
+        Long startTime=System.currentTimeMillis();
+        try {
+            SpringDataPageable<LogCountReq> pageReq=new SpringDataPageable<LogCountReq>();
+            Integer pagenamber=1;
+            Integer pagesize=100;
+            LogCountReq param=new LogCountReq();
+            param.setOperateDate(new Date());
+            pageReq.setParam(param);
+            while(true){
+                pageReq.setPagenamber(pagenamber);
+                pageReq.setPagesize(pagesize);
+                ResultVo<Page<LogDomain>> rs = logService.findPagesByParams(pageReq);
+                Page<LogDomain> page = rs.getResult();
+                List<LogDomain> logDomainList = page.getContent();
+                logUrlCountService.insertLogUrlCountTable(logDomainList);
+                if(pagenamber>=page.getTotalPages()){
+                    break;
                 }
+                pagenamber++;
             }
-            
-            for(Entry<String, LogIpCount> entry :map.entrySet()){
-                LogIpCount logIpCount = entry.getValue();
-                logIpCountRepository.save(logIpCount);
-            }
+        } catch (Exception e) {
+            logger.error("logUrlCount 统计日志失败",e);
         }
-        
+        Long second=(System.currentTimeMillis()-startTime)/1000;
+        logger.info("logUrlCount log 耗时 ："+second/3600+"h "+(second/60)%60+"m "+second%60+"s");
     }
+   
 }

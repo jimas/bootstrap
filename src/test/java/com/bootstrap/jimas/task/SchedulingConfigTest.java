@@ -21,5 +21,9 @@ public class SchedulingConfigTest extends BaseTest {
     public void testLogIpCount() {
         schedulingConfig.logIpCount();
     }
+    @Test
+    public void testLogUrlCount() {
+        schedulingConfig.logUrlCount();
+    }
 
 }

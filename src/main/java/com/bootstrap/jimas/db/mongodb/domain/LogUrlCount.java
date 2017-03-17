@@ -8,18 +8,21 @@ import org.springframework.data.mongodb.core.mapping.Document;
  * @Description 日志统计对象
  * @author weqinjia.liu
  * @Date 2017年3月15日
- * 1、我需要看出有哪些ip访问我，每个ip访问多少次。   siteSource remoteAddr access_count  operateDate 
+ * 2、访问的 url 次数
  */
-@Document(collection = "logIpCount")
-public class LogIpCount extends BaseDomain{
+@Document(collection = "logUrlCount")
+public class LogUrlCount extends BaseDomain{
     
-    private static final long serialVersionUID = 1388703912853889468L;
+    
+    private static final long serialVersionUID = -2282106759493207197L;
     
     //id属性是给mongodb用的，用@Id注解修饰
     @Id
-    private String id;//siteSource + operateDate + remoteAddr
+    private String id;//siteSource +url+ operateDate+remoteAddr
     //来源系统
     private String siteSource;
+    //url
+    private String url;
     //remoteAddr
     private String remoteAddr;
     //操作时间
@@ -39,12 +42,6 @@ public class LogIpCount extends BaseDomain{
     public void setSiteSource(String siteSource) {
         this.siteSource = siteSource;
     }
-    public String getRemoteAddr() {
-        return remoteAddr;
-    }
-    public void setRemoteAddr(String remoteAddr) {
-        this.remoteAddr = remoteAddr;
-    }
     public Date getOperateDate() {
         return operateDate;
     }
@@ -56,7 +53,20 @@ public class LogIpCount extends BaseDomain{
     }
     public void setAccess_count(Long access_count) {
         this.access_count = access_count;
-    } 
+    }
+    public String getUrl() {
+        return url;
+    }
+    public void setUrl(String url) {
+        this.url = url;
+    }
+    public String getRemoteAddr() {
+        return remoteAddr;
+    }
+    public void setRemoteAddr(String remoteAddr) {
+        this.remoteAddr = remoteAddr;
+    }
+    
     
     
 
