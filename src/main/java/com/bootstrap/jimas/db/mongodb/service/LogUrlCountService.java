@@ -47,6 +47,11 @@ public class LogUrlCountService {
             
             for(Entry<String, LogUrlCount> entry :map.entrySet()){
                 LogUrlCount logUrlCount = entry.getValue();
+                String id=logUrlCount.getId();
+                LogUrlCount findOne = logUrlCountRepository.findOne(id);
+                if(findOne!=null){
+                    logUrlCount.setAccess_count(logUrlCount.getAccess_count()+findOne.getAccess_count());
+                }
                 logUrlCountRepository.save(logUrlCount);
             }
         }

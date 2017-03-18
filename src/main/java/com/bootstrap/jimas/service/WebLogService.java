@@ -99,7 +99,7 @@ public class WebLogService implements WebLogApi {
         if (!StringUtils.isEmpty(param)) {
             Date operateDate = param.getOperateDate();
             if (!StringUtils.isEmpty(operateDate)) {
-                CriteriaDefinition criteriaDefinition = new Criteria("operateDate").lte(operateDate).gt(DateUtils.addDays(operateDate, -param.getDays()));
+                CriteriaDefinition criteriaDefinition = new Criteria("operateDate").lte(DateUtil.parseStrAutoToDate(DateUtil.formatDate(operateDate))).gt(DateUtils.addDays(operateDate, -1));
                 query.addCriteria(criteriaDefinition);
             }
         }

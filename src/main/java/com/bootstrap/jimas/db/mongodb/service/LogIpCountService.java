@@ -13,6 +13,7 @@ import org.springframework.util.StringUtils;
 import com.bootstrap.jimas.db.mongodb.dao.LogIpCountRepository;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
 import com.bootstrap.jimas.db.mongodb.domain.LogIpCount;
+import com.bootstrap.jimas.db.mongodb.domain.LogUrlCount;
 import com.jimas.common.util.DateUtil;
 
 @Service
@@ -45,6 +46,11 @@ public class LogIpCountService {
             
             for(Entry<String, LogIpCount> entry :map.entrySet()){
                 LogIpCount logIpCount = entry.getValue();
+                String id=logIpCount.getId();
+                LogIpCount findOne = logIpCountRepository.findOne(id);
+                if(findOne!=null){
+                    logIpCount.setAccess_count(logIpCount.getAccess_count()+findOne.getAccess_count());
+                }
                 logIpCountRepository.save(logIpCount);
             }
         }
