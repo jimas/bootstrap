@@ -15,12 +15,15 @@ import org.springframework.data.domain.Sort.Order;
 import org.springframework.data.mongodb.core.MongoTemplate;
 import org.springframework.data.mongodb.core.aggregation.Aggregation;
 import org.springframework.data.mongodb.core.aggregation.AggregationResults;
+import org.springframework.data.mongodb.core.aggregation.GroupOperation;
+import org.springframework.data.mongodb.core.aggregation.ProjectionOperation;
 import org.springframework.data.mongodb.core.aggregation.TypedAggregation;
 import org.springframework.data.mongodb.core.query.Criteria;
 import org.springframework.data.mongodb.core.query.CriteriaDefinition;
 import org.springframework.data.mongodb.core.query.Query;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+
 import com.bootstrap.jimas.api.WebLogApi;
 import com.bootstrap.jimas.api.request.LogIpRq;
 import com.bootstrap.jimas.api.request.LogStatisticsRq;
@@ -99,7 +102,9 @@ public class WebLogService implements WebLogApi {
         if (!StringUtils.isEmpty(param)) {
             Date operateDate = param.getOperateDate();
             if (!StringUtils.isEmpty(operateDate)) {
-                CriteriaDefinition criteriaDefinition = new Criteria("operateDate").lte(DateUtil.parseStrAutoToDate(DateUtil.formatDate(operateDate))).gt(DateUtils.addDays(operateDate, -1));
+                CriteriaDefinition criteriaDefinition = new Criteria("operateDate")
+                .lte(DateUtil.parseStrAutoToDate(DateUtil.formatDate(operateDate)))
+                .gt(DateUtil.parseStrAutoToDate(DateUtil.formatDate(DateUtils.addDays(operateDate, -1))));
                 query.addCriteria(criteriaDefinition);
             }
         }
@@ -119,18 +124,20 @@ public class WebLogService implements WebLogApi {
     public ResultVo<List<LogStatisticsRs>> statisticsSiteSourceAccess(LogStatisticsRq logStatisticsRq) {
         ResultVo<List<LogStatisticsRs>> resultVo = new ResultVo<List<LogStatisticsRs>>();
         Criteria criteria=new Criteria();
+        boolean dayBlean=false;
         if(!StringUtils.isEmpty(logStatisticsRq)){
             if(!StringUtils.isEmpty(logStatisticsRq.getSiteSource())){
-                criteria = Criteria.where("siteSource").is(logStatisticsRq.getSiteSource());
+                criteria.and("siteSource").is(logStatisticsRq.getSiteSource());
             }
             if (!StringUtils.isEmpty(logStatisticsRq.getStartDate())) {
-                criteria.and("operateDate");
+                dayBlean=true;
+                Criteria and = criteria.and("operateDate");
                 if (!StringUtils.isEmpty(logStatisticsRq.getDays())) {
-                    criteria.gt(DateUtil.parseStrAutoToDate(DateUtil.format(logStatisticsRq.getStartDate(), DateUtil.DATE_FORMAT)));
-                    criteria.lte(DateUtil.parseStrAutoToDate(DateUtil.format(DateUtils.addDays(logStatisticsRq.getStartDate(), logStatisticsRq.getDays()),
+                   and.gt(DateUtil.parseStrAutoToDate(DateUtil.format(logStatisticsRq.getStartDate(), DateUtil.DATE_FORMAT)))
+                   .lte(DateUtil.parseStrAutoToDate(DateUtil.format(DateUtils.addDays(logStatisticsRq.getStartDate(), logStatisticsRq.getDays()),
                             DateUtil.DATE_FORMAT)));
                 } else {
-                    criteria.is(DateUtil.parseStrAutoToDate(DateUtil.format(logStatisticsRq.getStartDate(), DateUtil.DATE_FORMAT)));
+                    and.is(DateUtil.parseStrAutoToDate(DateUtil.format(logStatisticsRq.getStartDate(), DateUtil.DATE_FORMAT)));
                 }
             }
         }
@@ -144,11 +151,20 @@ public class WebLogService implements WebLogApi {
         
 
         //2.the second method
+        GroupOperation group =null;
+        ProjectionOperation project =null;
+        if(dayBlean){
+            group= Aggregation.group("siteSource","operateDate");
+            project = Aggregation.project("accessCount","operateDate");
+        }else{
+            group= Aggregation.group("siteSource");
+            project = Aggregation.project("accessCount");
+        }
         TypedAggregation<LogIpCount> aggregation =Aggregation.newAggregation(LogIpCount.class,
                 Aggregation.match(criteria)
-                , Aggregation.group("siteSource")
+                , group
               .sum("access_count").as("accessCount"),Aggregation.sort(Direction.DESC, "accessCount"),
-              Aggregation.project("accessCount").and("siteSource").previousOperation());
+              project.and("siteSource").previousOperation());
         AggregationResults<LogStatisticsRs> aggregateRs1 = mongoTemplate.aggregate(aggregation, LogStatisticsRs.class);
         resultVo.setResult(aggregateRs1.getMappedResults());
         return resultVo;
@@ -201,7 +217,7 @@ public class WebLogService implements WebLogApi {
                 criteria = Criteria.where("siteSource").is(logStatisticsRq.getSiteSource());
             }
             if (!StringUtils.isEmpty(logStatisticsRq.getStartDate())) {
-                criteria.and("operateDate");
+                criteria = criteria.and("operateDate");
                 if (!StringUtils.isEmpty(logStatisticsRq.getDays())) {
                     criteria.gt(DateUtil.parseStrAutoToDate(DateUtil.format(logStatisticsRq.getStartDate(), DateUtil.DATE_FORMAT)));
                     criteria.lte(DateUtil.parseStrAutoToDate(DateUtil.format(DateUtils.addDays(logStatisticsRq.getStartDate(), logStatisticsRq.getDays()),

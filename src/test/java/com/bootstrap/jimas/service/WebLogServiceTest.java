@@ -2,8 +2,10 @@ package com.bootstrap.jimas.service;
 
 import static org.junit.Assert.fail;
 
+import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.lang.time.DateUtils;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 
@@ -42,10 +44,14 @@ public class WebLogServiceTest extends BaseTest {
     public void testStatisticsSiteSourceAccess() {
         
         LogStatisticsRq logStatisticsRq=new LogStatisticsRq();
-//        String siteSource="bootstrap";
-//        logStatisticsRq.setSiteSource(siteSource);
+        String siteSource="dbconn";
+        logStatisticsRq.setSiteSource(siteSource);
+        logStatisticsRq.setStartDate(DateUtils.addDays(new Date(), -4));
+        logStatisticsRq.setDays(5);
         ResultVo<List<LogStatisticsRs>> rs = webLogService.statisticsSiteSourceAccess(logStatisticsRq);
         System.out.println(rs);
+        List<LogStatisticsRs> result = rs.getResult();
+        System.out.println(result.get(0).getOperateDate());
     }
     @Test
     public void testStatisticsLogIpCountAccess() {
