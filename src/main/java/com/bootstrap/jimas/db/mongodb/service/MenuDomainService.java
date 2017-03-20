@@ -2,6 +2,7 @@ package com.bootstrap.jimas.db.mongodb.service;
 import java.util.Comparator;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -87,15 +88,10 @@ public class MenuDomainService {
             MenuDomain<Menu> findOne = menuDomainRepository.findOne(siteSource);
             findOne.getSiteSource();
             List<Menu> menuList = (List<Menu>) findOne.getMenuList();
+            if(!CollectionUtils.isEmpty(menuList)){
+                menuListSort(menuList);
+            }
             
-            Menu menu = menuList.get(0);
-            menu.getMenuName();
-            menuList.sort(new Comparator<Menu>() {
-                @Override
-                public int compare(Menu o1, Menu o2) {
-                    return o1.getSortStr().compareTo(o2.getSortStr());
-                }
-            });
             resultVo.setResult(findOne);
         } catch (Exception e) {
             resultVo.setStatus(400);
@@ -103,6 +99,23 @@ public class MenuDomainService {
             logger.error("MenuDomainService.findMenuBySiteSource error ",e);
         }
         return resultVo;
+    }
+
+    private void menuListSort(List<Menu> menuList) {
+
+        menuList.sort(new Comparator<Menu>() {
+            @Override
+            public int compare(Menu o1, Menu o2) {
+                return o1.getSortStr().compareTo(o2.getSortStr());
+            }
+        });
+        
+        for (Menu menu : menuList) {
+            List<Menu> subMenuList = menu.getSubMenuList();
+            if(!CollectionUtils.isEmpty(subMenuList)){
+                menuListSort(subMenuList);
+            }
+        }
     }
     
 }
