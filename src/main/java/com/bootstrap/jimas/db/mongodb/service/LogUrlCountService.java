@@ -56,7 +56,12 @@ public class LogUrlCountService {
             }
         }
     }
-    
+    public void removeLog(Date startDate) {
+        List<LogUrlCount> list = logUrlCountRepository.findByOperateDate(startDate);
+        if(!CollectionUtils.isEmpty(list)){
+            logUrlCountRepository.delete(list);
+        }
+    }
     /*=================================================== private method ================================================*/
     /**
      * url 去除 后边的“/”
@@ -70,4 +75,6 @@ public class LogUrlCountService {
         }
         return url;
     }
+
+   
 }

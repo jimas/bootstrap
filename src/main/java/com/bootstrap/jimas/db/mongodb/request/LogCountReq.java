@@ -11,9 +11,9 @@ public class LogCountReq extends BaseRes {
     
     private String siteSource;
     
-//    private Integer days=2;//统计多少天
+    private Date startDate;
     
-    private Date operateDate;
+    private Date endDate;
 
     public String getSiteSource() {
         return siteSource;
@@ -23,25 +23,35 @@ public class LogCountReq extends BaseRes {
         this.siteSource = siteSource;
     }
 
-    public Date getOperateDate() {
-        return operateDate;
+    public Date getStartDate() {
+        return startDate;
     }
 
-    public void setOperateDate(Date operateDate) {
-        this.operateDate = operateDate;
+    public void setStartDate(Date startDate) {
+        this.startDate = startDate;
     }
 
+    public Date getEndDate() {
+        return endDate;
+    }
+
+    public void setEndDate(Date endDate) {
+        this.endDate = endDate;
+    }
 
     @Override
     public String toString() {
         StringBuilder builder = new StringBuilder();
         builder.append("LogCountReq [");
         if (siteSource != null) builder.append("siteSource=").append(siteSource).append(", ");
-        if (operateDate != null) builder.append("operateDate=").append(operateDate);
+        if (startDate != null) builder.append("startDate=").append(startDate).append(", ");
+        if (endDate != null) builder.append("endDate=").append(endDate);
         builder.append("]");
         return builder.toString();
     }
     
+
+   
     
 
 }

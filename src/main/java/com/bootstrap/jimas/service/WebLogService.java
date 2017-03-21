@@ -100,12 +100,26 @@ public class WebLogService implements WebLogApi {
         query.with(pageReq);
         LogCountReq param = pageReq.getParam();
         if (!StringUtils.isEmpty(param)) {
-            Date operateDate = param.getOperateDate();
-            if (!StringUtils.isEmpty(operateDate)) {
-                CriteriaDefinition criteriaDefinition = new Criteria("operateDate")
-                .lte(DateUtil.parseStrAutoToDate(DateUtil.formatDate(operateDate)))
-                .gt(DateUtil.parseStrAutoToDate(DateUtil.formatDate(DateUtils.addDays(operateDate, -1))));
-                query.addCriteria(criteriaDefinition);
+            Date startDate = param.getStartDate();
+            Date endDate = param.getEndDate();
+            Criteria dateCriteria =null;
+            if (!StringUtils.isEmpty(startDate)) {
+                dateCriteria = new Criteria("operateDate");
+                dateCriteria.gt(startDate);
+            }
+            if (!StringUtils.isEmpty(endDate)) {
+                if(dateCriteria==null){
+                    dateCriteria = new Criteria("operateDate");
+                }
+                dateCriteria.lte(endDate);
+                
+            }
+            if(dateCriteria!=null){
+                query.addCriteria(dateCriteria);
+            }
+            if(!StringUtils.isEmpty(param.getSiteSource())) {
+                CriteriaDefinition siteCriteria=Criteria.where("siteSource").is(param.getSiteSource());
+                query.addCriteria(siteCriteria);
             }
         }
         long count = mongoTemplate.count(query, LogDomain.class);
@@ -235,6 +249,47 @@ public class WebLogService implements WebLogApi {
         resultVo.setResult(aggregateRs.getMappedResults());
         return resultVo;
     }
+
+    @Override
+    public ResultVo<List<LogStatisticsRs>> statisticsDayAccess(LogStatisticsRq today) {
+        ResultVo<List<LogStatisticsRs>> resultVo = new ResultVo<List<LogStatisticsRs>> ();
+//        SpringDataPageable<LogCountReq> pageReq=new SpringDataPageable<LogCountReq>();
+//        Integer pagenamber=1;
+//        Integer pagesize=1000;
+//        while(true){
+//            LogCountReq param=new LogCountReq();
+//            Date startDay = DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(DateUtils.addDays(today.getSiteSource(), -1)));//昨天 yyyy-MM-dd 00:00:00
+//            Date endDate=DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(today.getSiteSource()));//昨天 yyyy-MM-dd 00:00:00
+//            param.setStartDate(startDay);
+//            param.setEndDate(endDate);
+//            pageReq.setPagenamber(pagenamber);
+//            pageReq.setPagesize(pagesize);
+//            pageReq.setParam(param);
+//            ResultVo<Page<LogDomain>> rs = this.findPagesByParams(pageReq);
+//            
+//            Page<LogDomain> page = rs.getResult();
+//            List<LogDomain> list = page.getContent();
+//            
+//        }
+        if(StringUtils.isEmpty(today)||StringUtils.isEmpty(today.getStartDate())){//默认今天
+            today = new LogStatisticsRq();
+            today.setStartDate(new Date());
+        }
+        
+        Date startDay = DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(today.getStartDate()));//今天 yyyy-MM-dd 00:00:00
+        Date endDate=DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(DateUtils.addDays(today.getStartDate(), 1)));//昨天 yyyy-MM-dd 00:00:00
+        Criteria criteria=Criteria.where("operateDate").gt(startDay).lte(endDate);
+        
+        Aggregation aggregation = Aggregation.newAggregation(Aggregation.match(criteria),Aggregation.group("siteSource")
+                .count().as("accessCount"),Aggregation.sort(Direction.DESC, "accessCount")
+                ,Aggregation.project("accessCount").and("siteSource").previousOperation());
+        
+        AggregationResults<LogStatisticsRs> aggregateRs = mongoTemplate.aggregate(aggregation, LogDomain.class, LogStatisticsRs.class);
+        resultVo.setResult(aggregateRs.getMappedResults());
+        
+        return resultVo;
+    }
+
 
     /*
      * =============================================== private method

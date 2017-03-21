@@ -1,5 +1,8 @@
 package com.bootstrap.jimas.db.mongodb.dao;
 
+import java.util.Date;
+import java.util.List;
+
 import org.springframework.data.mongodb.repository.MongoRepository;
 
 import com.bootstrap.jimas.db.mongodb.domain.LogIpCount;
@@ -9,5 +12,8 @@ import com.bootstrap.jimas.db.mongodb.domain.LogIpCount;
  * @Date 2017年3月15日
  */
 public interface LogIpCountRepository extends MongoRepository<LogIpCount, String> {
+
+
+    List<LogIpCount> findByOperateDate(Date startDate);
 
 }

@@ -13,7 +13,6 @@ import org.springframework.util.StringUtils;
 import com.bootstrap.jimas.db.mongodb.dao.LogIpCountRepository;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
 import com.bootstrap.jimas.db.mongodb.domain.LogIpCount;
-import com.bootstrap.jimas.db.mongodb.domain.LogUrlCount;
 import com.jimas.common.util.DateUtil;
 
 @Service
@@ -55,5 +54,12 @@ public class LogIpCountService {
             }
         }
         
+    }
+
+    public void removeLog(Date startDate) {
+        List<LogIpCount> list=logIpCountRepository.findByOperateDate(startDate);
+        if(!CollectionUtils.isEmpty(list)){
+            logIpCountRepository.delete(list);
+        }
     }
 }

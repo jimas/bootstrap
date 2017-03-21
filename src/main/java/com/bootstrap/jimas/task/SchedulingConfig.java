@@ -1,12 +1,15 @@
 package com.bootstrap.jimas.task;
 import java.util.Date;
 import java.util.List;
+
+import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.data.domain.Page;
 import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.scheduling.annotation.Scheduled;
+
 import com.bootstrap.jimas.api.WebLogApi;
 import com.bootstrap.jimas.common.SpringDataPageable;
 import com.bootstrap.jimas.db.mongodb.domain.LogDomain;
@@ -15,6 +18,7 @@ import com.bootstrap.jimas.db.mongodb.request.LogCountReq;
 import com.bootstrap.jimas.db.mongodb.service.LogIpCountService;
 import com.bootstrap.jimas.db.mongodb.service.LogUrlCountService;
 import com.jimas.common.ResultVo;
+import com.jimas.common.util.DateUtil;
 
 /**
  * @Description 定时任务配置类
@@ -58,8 +62,12 @@ public class SchedulingConfig {
             Integer pagenamber=1;
             Integer pagesize=100;
             LogCountReq param=new LogCountReq();
-            param.setOperateDate(new Date());
+            Date startDate = DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(DateUtils.addDays(new Date(), -1)));//昨天 yyyy-MM-dd 00:00:00
+            Date endDate = DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(new Date()));//今天 yyyy-MM-dd 00:00:00
+            param.setStartDate(startDate);
+            param.setEndDate(endDate);
             pageReq.setParam(param);
+            logIpCountService.removeLog(startDate);
             while(true){
                 pageReq.setPagenamber(pagenamber);
                 pageReq.setPagesize(pagesize);
@@ -88,7 +96,11 @@ public class SchedulingConfig {
             Integer pagenamber=1;
             Integer pagesize=100;
             LogCountReq param=new LogCountReq();
-            param.setOperateDate(new Date());
+            Date startDate = DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(DateUtils.addDays(new Date(), -1)));//昨天 yyyy-MM-dd 00:00:00
+            Date endDate = DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(new Date()));//今天 yyyy-MM-dd 00:00:00
+            param.setStartDate(startDate);
+            param.setEndDate(endDate);
+            logUrlCountService.removeLog(startDate);
             pageReq.setParam(param);
             while(true){
                 pageReq.setPagenamber(pagenamber);

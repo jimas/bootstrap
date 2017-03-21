@@ -1,5 +1,6 @@
 package com.bootstrap.jimas.api;
 
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
@@ -28,6 +29,12 @@ public interface WebLogApi {
     public ResultVo<String> deleteLogBydays(BaseKeyReq<Integer> daysReq); 
     
     public ResultVo<Page<LogDomain>> findPagesByParams(SpringDataPageable<LogCountReq> pageReq);
+    /**
+     * 统计系统 每日访问量  默认今天
+     * @param logStatisticsRq
+     * @return
+     */
+    public ResultVo<List<LogStatisticsRs>> statisticsDayAccess(LogStatisticsRq logStatisticsRq);
     /**
      * 统计系统 ip访问量
      * @param logStatisticsRq

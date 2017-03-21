@@ -163,4 +163,22 @@ public class RestFulController {
         
         return  webLogApi.statisticsSiteSourceUrlAccess(logStatisticsRq);
     }
+    
+    /**
+     * 统计系统每日访问量
+     * @param token
+     * @param logIpRq
+     * @return
+     */
+    @RequestMapping(value = "/webLog/countAccessByDay", method = RequestMethod.POST,produces = MediaType.APPLICATION_JSON_VALUE + ";charset=UTF-8")
+    public ResultVo<List<LogStatisticsRs>> countAccessByDay(@RequestParam(required=true,value="token") String token,@RequestBody LogStatisticsRq logStatisticsRq){
+        String tokenBak = MD5Util.MD5Encode(paramsConfig.getRestKey()+logStatisticsRq.getSiteSource());
+        if(!tokenBak.equals(token)){// token 不匹配
+            ResultVo<List<LogStatisticsRs>> resultVo = new ResultVo<>();
+            resultVo.setMessage("token 不匹配");
+            resultVo.setStatus(401);
+            return resultVo;
+        }
+        return  webLogApi.statisticsDayAccess(logStatisticsRq);
+    }
 }

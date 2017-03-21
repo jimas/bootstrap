@@ -78,5 +78,12 @@ public class WebLogServiceTest extends BaseTest {
         ResultVo<List<LogUrlCount>> rs = webLogService.statisticsLogUrlIpCountAccess(logUrlRq);
         System.out.println(rs);
     }
+    @Test
+    public void testStatisticsDayAccess() {
+        
+        LogStatisticsRq logRq=new LogStatisticsRq();
+        ResultVo<List<LogStatisticsRs>> rs = webLogService.statisticsDayAccess(logRq);
+        System.out.println(rs);
+    }
 
 }
