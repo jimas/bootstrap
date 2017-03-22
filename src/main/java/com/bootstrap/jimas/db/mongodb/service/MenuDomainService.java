@@ -34,6 +34,10 @@ public class MenuDomainService {
         try {
             Assert.notNull(menuDomain);
             MenuDomain<Menu> save = menuDomainRepository.save(menuDomain);
+            List<Menu> menuList = (List<Menu>) save.getMenuList();
+            if(!CollectionUtils.isEmpty(menuList)){
+                menuListSort(menuList);
+            }
             resultVo.setResult(save);
         } catch (Exception e) {
             resultVo.setStatus(400);
@@ -86,7 +90,6 @@ public class MenuDomainService {
         try {
             Assert.notNull(siteSource);
             MenuDomain<Menu> findOne = menuDomainRepository.findOne(siteSource);
-            findOne.getSiteSource();
             List<Menu> menuList = (List<Menu>) findOne.getMenuList();
             if(!CollectionUtils.isEmpty(menuList)){
                 menuListSort(menuList);
