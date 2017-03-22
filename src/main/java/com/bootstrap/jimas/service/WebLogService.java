@@ -253,24 +253,6 @@ public class WebLogService implements WebLogApi {
     @Override
     public ResultVo<List<LogStatisticsRs>> statisticsDayAccess(LogStatisticsRq today) {
         ResultVo<List<LogStatisticsRs>> resultVo = new ResultVo<List<LogStatisticsRs>> ();
-//        SpringDataPageable<LogCountReq> pageReq=new SpringDataPageable<LogCountReq>();
-//        Integer pagenamber=1;
-//        Integer pagesize=1000;
-//        while(true){
-//            LogCountReq param=new LogCountReq();
-//            Date startDay = DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(DateUtils.addDays(today.getSiteSource(), -1)));//昨天 yyyy-MM-dd 00:00:00
-//            Date endDate=DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(today.getSiteSource()));//昨天 yyyy-MM-dd 00:00:00
-//            param.setStartDate(startDay);
-//            param.setEndDate(endDate);
-//            pageReq.setPagenamber(pagenamber);
-//            pageReq.setPagesize(pagesize);
-//            pageReq.setParam(param);
-//            ResultVo<Page<LogDomain>> rs = this.findPagesByParams(pageReq);
-//            
-//            Page<LogDomain> page = rs.getResult();
-//            List<LogDomain> list = page.getContent();
-//            
-//        }
         if(StringUtils.isEmpty(today)||StringUtils.isEmpty(today.getStartDate())){//默认今天
             today = new LogStatisticsRq();
             today.setStartDate(new Date());
@@ -289,7 +271,6 @@ public class WebLogService implements WebLogApi {
         
         return resultVo;
     }
-
 
     /*
      * =============================================== private method

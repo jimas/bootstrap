@@ -1,6 +1,5 @@
 package com.bootstrap.jimas.api;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.data.domain.Page;
