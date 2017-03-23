@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.lang.time.DateUtils;
 import org.apache.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -192,6 +193,21 @@ public class WebLogService implements WebLogApi {
             CriteriaDefinition criteria=Criteria.where("siteSource").is(logIpRq.getSiteSource());
             query.addCriteria(criteria);
         }
+        if(!CollectionUtils.isEmpty(logIpRq.getRemoveIpList())){
+            CriteriaDefinition criteriaDefinition=Criteria.where("remoteAddr").nin(logIpRq.getRemoveIpList());
+            query.addCriteria(criteriaDefinition);
+        }
+        if(!StringUtils.isEmpty(logIpRq.getStart())||!StringUtils.isEmpty(logIpRq.getEnd())){
+            Criteria dateCriteria=Criteria.where("operateDate");
+            if(!StringUtils.isEmpty(logIpRq.getStart())){
+                dateCriteria.gt(DateUtil.getDateFormat(logIpRq.getStart()));
+            }
+            if(!StringUtils.isEmpty(logIpRq.getEnd())){
+                dateCriteria.lte(DateUtil.getDateFormat(logIpRq.getEnd()));
+            }
+            query.addCriteria(dateCriteria);
+        }
+        
         SpringDataPageable<LogIpCount> sort=new SpringDataPageable<LogIpCount>();
         sort.setPagesize(logIpRq.getSize());
         List<Order> orders = new ArrayList<Order>();

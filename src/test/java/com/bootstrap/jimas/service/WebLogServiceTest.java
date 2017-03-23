@@ -2,6 +2,7 @@ package com.bootstrap.jimas.service;
 
 import static org.junit.Assert.fail;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -57,8 +58,12 @@ public class WebLogServiceTest extends BaseTest {
     public void testStatisticsLogIpCountAccess() {
         
         LogIpRq logIpRq=new LogIpRq();
-//        String siteSource="bootstrap";
-//        logIpRq.setSiteSource(siteSource);
+        String siteSource="bootstrap";
+        logIpRq.setSiteSource(siteSource);
+        List<String> removeIpList=new ArrayList<String>();
+        removeIpList.add("127.0.0.1");
+        removeIpList.add("140.205.225.188");
+        logIpRq.setRemoveIpList(removeIpList);
         ResultVo<List<LogIpCount>> rs = webLogService.statisticsLogIpCountAccess(logIpRq);
         System.out.println(rs);
     }
