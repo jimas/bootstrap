@@ -198,12 +198,12 @@ public class WebLogService implements WebLogApi {
             query.addCriteria(criteriaDefinition);
         }
         if(!StringUtils.isEmpty(logIpRq.getStart())||!StringUtils.isEmpty(logIpRq.getEnd())){
-            Criteria dateCriteria=Criteria.where("operateDate");
+            Criteria dateCriteria=new Criteria("operateDate");
             if(!StringUtils.isEmpty(logIpRq.getStart())){
-                dateCriteria.gt(DateUtil.getDateFormat(logIpRq.getStart()));
+                dateCriteria.gt(DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(logIpRq.getStart())));
             }
             if(!StringUtils.isEmpty(logIpRq.getEnd())){
-                dateCriteria.lte(DateUtil.getDateFormat(logIpRq.getEnd()));
+                dateCriteria.lte(DateUtil.parseStrAutoToDate(DateUtil.getDateFormat(logIpRq.getEnd())));
             }
             query.addCriteria(dateCriteria);
         }

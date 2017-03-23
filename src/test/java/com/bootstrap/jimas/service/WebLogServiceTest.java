@@ -64,6 +64,7 @@ public class WebLogServiceTest extends BaseTest {
         removeIpList.add("127.0.0.1");
         removeIpList.add("140.205.225.188");
         logIpRq.setRemoveIpList(removeIpList);
+        logIpRq.setStart(DateUtils.addDays(new Date(),-6));
         ResultVo<List<LogIpCount>> rs = webLogService.statisticsLogIpCountAccess(logIpRq);
         System.out.println(rs);
     }
