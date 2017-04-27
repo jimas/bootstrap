@@ -7,6 +7,7 @@ import java.util.List;
 import org.junit.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.bootstrap.jimas.api.MenuResApi;
 import com.bootstrap.jimas.db.mongodb.BaseTest;
@@ -26,7 +27,7 @@ public class MenuServiceTest extends BaseTest {
     
     @Test
     public void testSaveMenuButton() {
-        String siteSource="dbconn";
+        String siteSource="bootstrap";
         ResultVo<MenuDomain<Menu>> rs = menuResApi.findMenuBySiteSource(siteSource);
         MenuDomain<Menu> result = rs.getResult();
         List<Menu> menuList = result.getMenuList();
@@ -43,7 +44,7 @@ public class MenuServiceTest extends BaseTest {
             menuButton.setCode(menuA.getMenuCode());
             menuButton.setLevel(menuA.getLevel());
             menuButton.setName(menuA.getMenuName());
-            menuButton.setOperateUrl(menuA.getMenuUrl());
+            menuButton.setOperateUrl(StringUtils.isEmpty(menuA.getMenuUrl())?"#":menuA.getMenuUrl());
             menuButton.setParentCode(menuA.getParentCode());
             menuButton.setSiteSource(siteSource);
             menuButton.setSortStr(menuA.getSortStr());

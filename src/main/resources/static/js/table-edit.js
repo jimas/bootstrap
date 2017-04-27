@@ -15,7 +15,7 @@ var TableEditable = function () {
                 oTable.fnDraw();
             }
 
-            function editRow(oTable, nRow) {
+            function editRow(oTable, nRow,url) {
                 var aData = oTable.fnGetData(nRow);
                 var jqTds = $('>td', nRow);
                 var butIndex=0;
@@ -25,7 +25,7 @@ var TableEditable = function () {
                 	}
                 	if(jqTds[rowIndex].attributes["editable"]&&jqTds[rowIndex].attributes["editable"].value=="button"){
                 		if(butIndex==0){
-                			jqTds[rowIndex].innerHTML = '<a class="edit" href="">Save</a>';
+                			jqTds[rowIndex].innerHTML = '<a url='+url+' class="edit" href="">Save</a>';
                 		}else{
                 			jqTds[rowIndex].innerHTML = '<a class="cancel" href="">Cancel</a>';
                 		}
@@ -35,9 +35,9 @@ var TableEditable = function () {
                 oTable.fnDraw();
             }
 
-            function saveRow(oTable, nRow) {
+            function saveRow(oTable, nRow,url) {
             	var jqTds = $('>td', nRow);
-            	if(syncSaveValue(jqTds)){
+            	if(syncSaveValue(jqTds,url)){
             		var butIndex=0;
             		for(var rowIndex=0;rowIndex<jqTds.length;rowIndex++){
             			if(jqTds[rowIndex].attributes["editable"]&&jqTds[rowIndex].attributes["editable"].value=="input"){
@@ -59,10 +59,9 @@ var TableEditable = function () {
             }
 
             //异步保存
-            function syncSaveValue(tdRows){
+            function syncSaveValue(tdRows,url){
             	var data=createData(tdRows);
-            	alert(data);
-            	 $.post("saveMenu",data,function(result){
+            	 $.post(url,data,function(result){
             		 if(result.status!=200){
         				alert("保存失败");
             		 }else{
@@ -76,7 +75,6 @@ var TableEditable = function () {
             		var $tdHtml=$(tdRows[i]);//定义一个td 的 html
             		if(tdRows[i].attributes["editable"]&&tdRows[i].attributes["editable"].value=="input"){
             			var $inputHtml=$(tdRows[i].innerHTML);//定义一个 td 内的 input 的 html
-            			alert(tdRows[i].innerHTML);
             			if(data==""){
             				data=data+$tdHtml.attr("name")+"="+$inputHtml.attr("value");
             			}else{
@@ -125,12 +123,18 @@ var TableEditable = function () {
             var nEditing = null;
 
             $('#sample_editable_1_new').click(function (e) {
+            	var length=$('#sample_editable_1').find("thead").find("tr").find("th").length;
+            	var dataArray=new Array();
+            	for(var i=0;i<length-2;i++){
+            		dataArray.push('');
+            	}
+            	dataArray.push('<a url="" class="edit" href="">Edit</a>');
+            	dataArray.push('<a class="cancel" data-mode="new" href="">Cancel</a>');
                 e.preventDefault();
-                var aiNew = oTable.fnAddData(['', '', '', '',
-                        '<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>'
-                ]);
+                // ['', '', '', '','', '', '', '','','<a class="edit" href="">Edit</a>', '<a class="cancel" data-mode="new" href="">Cancel</a>']
+                var aiNew = oTable.fnAddData(dataArray);
                 var nRow = oTable.fnGetNodes(aiNew[0]);
-                editRow(oTable, nRow);
+                editRow(oTable, nRow,"");
                 nEditing = nRow;
             });
 
@@ -158,23 +162,23 @@ var TableEditable = function () {
             });
 
             $('#sample_editable_1 a.edit').live('click', function (e) {
+            	var url=$('#sample_editable_1 a.edit').attr("url");
                 e.preventDefault();
-                debugger
                 /* Get the row as a parent of the link that was clicked on */
                 var nRow = $(this).parents('tr')[0];
 
                 if (nEditing !== null && nEditing != nRow) {
                     /* Currently editing - but not this row - restore the old before continuing to edit mode */
                     restoreRow(oTable, nEditing);
-                    editRow(oTable, nRow);
+                    editRow(oTable, nRow,url);
                     nEditing = nRow;
                 } else if (nEditing == nRow && this.innerHTML == "Save") {
                     /* Editing this row and want to save it */
-                    saveRow(oTable, nRow);
+                    saveRow(oTable, nRow,url);
                     nEditing = null;
                 } else {
                     /* No edit in progress - let's start one */
-                    editRow(oTable, nRow);
+                    editRow(oTable, nRow,url);
                     nEditing = nRow;
                 }
             });
