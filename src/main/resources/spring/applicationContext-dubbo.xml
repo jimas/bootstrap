@@ -12,4 +12,7 @@
 	<dubbo:monitor protocol="registry"/>
 	
 	<dubbo:reference id="roleApi" group="${dubbo.group}" interface="com.jimas.weixin.skytrap.repository.api.RoleApi" />
+	<dubbo:reference id="userApi" group="${dubbo.group}" interface="com.jimas.weixin.skytrap.repository.api.UserApi" />
+	<dubbo:reference id="userRoleApi" group="${dubbo.group}" interface="com.jimas.weixin.skytrap.repository.api.UserRoleApi" />
+	<dubbo:reference id="menuButtonApi" group="${dubbo.group}" interface="com.jimas.weixin.skytrap.repository.api.MenuButtonApi" />
 </beans>

@@ -3,7 +3,7 @@
 	xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="utf-8" />
-<title>菜单列表</title>
+<title>用户列表</title>
 <meta content="width=device-width, initial-scale=1.0" name="viewport" />
 <meta content="" name="description" />
 <meta content="" name="author" />
@@ -14,7 +14,7 @@
 
 </head>
 <body class="page-header-fixed"
-	th:with="ancestorCode='Dashboard',parentCode='Dashboard',code='menuList'">
+	th:with="ancestorCode='Layouts',parentCode='Layouts',code='UserList'">
 
 	<div class="header navbar navbar-inverse navbar-fixed-top"
 		th:include="common/header :: header" />
@@ -73,12 +73,12 @@
 							</div>
 						</div>
 						<h3 class="page-title">
-							全站菜单 <small>菜单列表</small>
+							全站用户 <small>用户列表</small>
 						</h3>
 						<ul class="breadcrumb">
 							<li><i class="icon-home"></i> <a href="index.html">Home</a>
 								<i class="icon-angle-right"></i></li>
-							<li><a href="#">菜单列表</a></li>
+							<li><a href="#">用户列表</a></li>
 						</ul>
 					</div>
 				</div>
@@ -115,9 +115,7 @@
 									<div class="btn-group">
 
 										<button id="sample_editable_1_new" class="btn green">
-
 											Add New <i class="icon-plus"></i>
-
 										</button>
 
 									</div>
@@ -146,12 +144,12 @@
 									id="sample_editable_1">
 									<thead>
 										<tr>
-											<th>菜单来源</th>
-											<th>菜单url</th>
+											<th>菜单id</th>
 											<th>菜单名称</th>
 											<th>菜单编码</th>
 											<th>父级编码</th>
 											<th>祖先编码</th>
+											<th>菜单url</th>
 											<th>菜单排序</th>
 											<th>菜单icon</th>
 											<th>菜单等级</th>
@@ -160,21 +158,6 @@
 										</tr>
 
 									</thead>
-									<tbody th:if="${not #lists.isEmpty(menuList)}">
-										<tr th:each="menuButton : ${menuList}">
-											<td name="siteSource" th:text="${menuButton.siteSource}"></td>
-											<td name="operateUrl" editable="input" th:text="${menuButton.operateUrl}"></td>
-											<td name="name" editable="input" th:text="${menuButton.name}"></td>
-											<td name="code" editable="input" th:text="${menuButton.code}"></td>
-											<td name="parentCode" editable="input" th:text="${menuButton.parentCode}"></td>
-											<td name="ancestorCode" editable="input" th:text="${menuButton.ancestorCode}"></td>
-											<td name="sortStr" editable="input" th:text="${menuButton.sortStr}"></td>
-											<td name="icon" editable="input" th:text="${menuButton.icon}"></td>
-											<td name="level" editable="input" th:text="${menuButton.level}"></td>
-											<td editable="button"><a class="edit" href="javascript:;">Edit</a></td>
-											<td editable="button"><a class="delete" href="javascript:;">Delete</a></td>
-										</tr>
-									</tbody>
 								</table>
 							</div>
 						</div>

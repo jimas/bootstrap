@@ -35,7 +35,7 @@ var InitPage=function(){
 						}
 					}
 					$pageTemp=$pageTemp+"<li><a>...</a></li>" +
-					"<li><a href='javascript:;'>"+page.totalPages+"</a></li>";
+					"<li><a num="+page.totalPages+" href='javascript:;'>"+page.totalPages+"</a></li>";
 				}
 				else if(page.totalPages>showPageSize&&page.number>=showPageSize-1&&(page.totalPages-page.number)>showPageSize-3){
 					$pageTemp=$pageTemp+"<li><a num='1' href='javascript:;'>"+1+"</a></li>";
